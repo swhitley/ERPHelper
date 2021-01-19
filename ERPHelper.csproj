@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Costura.Fody.4.1.0\build\Costura.Fody.props" Condition="Exists('packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{2985F37E-A0AF-4AD0-A06E-63FEA3D36DC9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ERPHelper</RootNamespace>
+    <AssemblyName>ERPHelper</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug-x64</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release-x64</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Default values for debugging sso it start correct version of Notepad++
+         $(ProgramW6432) and $(MSBuildProgramFiles32) points to the 64 and 32 bit "Program Files" directories -->
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(Platform)'=='x64'">
+    </StartProgram>
+    <StartProgram Condition="'$(Platform)'=='x86'">
+    </StartProgram>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.29.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>packages\HtmlAgilityPack.1.11.29\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="saxon-he-api-10.3, Version=10.3.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <HintPath>packages\Saxon-HE.10.3.0\lib\net40\saxon-he-api-10.3.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Json, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="XmlSampleGenerator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xml.XMLGen.1.0.0\lib\XmlSampleGenerator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyCustomAttributes.cs" />
+    <Compile Include="Controls\CComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Crypto.cs" />
+    <Compile Include="Controls\CTreeNode.cs" />
+    <Compile Include="Controls\CTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WDConnForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WDConnForm.Designer.cs">
+      <DependentUpon>WDConnForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluginInfrastructure\ClikeStringArray.cs" />
+    <Compile Include="PluginInfrastructure\DllExport\DllExportAttribute.cs" />
+    <Compile Include="PluginInfrastructure\Docking_h.cs" />
+    <Compile Include="PluginInfrastructure\GatewayDomain.cs" />
+    <Compile Include="PluginInfrastructure\IScintillaGateway.cs" />
+    <Compile Include="PluginInfrastructure\MenuCmdID_h.cs" />
+    <Compile Include="PluginInfrastructure\Msgs_h.cs" />
+    <Compile Include="PluginInfrastructure\NotepadPPGateway.cs" />
+    <Compile Include="PluginInfrastructure\NppPluginNETBase.cs" />
+    <Compile Include="PluginInfrastructure\NppPluginNETHelper.cs" />
+    <Compile Include="PluginInfrastructure\Preference_h.cs" />
+    <Compile Include="PluginInfrastructure\Resource_h.cs" />
+    <Compile Include="PluginInfrastructure\ScintillaGateway.cs" />
+    <Compile Include="PluginInfrastructure\Scintilla_iface.cs" />
+    <Compile Include="PluginInfrastructure\UnmanagedExports.cs" />
+    <Compile Include="PluginInfrastructure\Win32.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="Forms\WDMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WDMainForm.Designer.cs">
+      <DependentUpon>WDMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SaxXForm.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Workday\WDWebService.cs" />
+    <Compile Include="Workday\WDXMLSample.cs" />
+    <Compile Include="Workday\WDURLItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WDConnForm.resx">
+      <DependentUpon>WDConnForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WDMainForm.resx">
+      <DependentUpon>WDMainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="FodyWeavers.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
+    <None Include="Resources\Save_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloudDownload_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Filter_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\WDEnvironments.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PluginInfrastructure\DllExport\Mono.Cecil.dll" />
+    <Content Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.dll" />
+    <Content Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.MSBuild.dll" />
+    <None Include="Resources\ERPHelperIcon.ico" />
+    <None Include="Resources\Icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if exist "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" (
+    copy "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" "C:\Program Files (x86)\Notepad++\plugins\ERPHelper\ERPHelper.dll"
+)
+if exist "C:\Program Files\Notepad++\plugins\ERPHelper.dll" (
+    copy "C:\Program Files\Notepad++\plugins\ERPHelper.dll" "C:\Program Files\Notepad++\plugins\ERPHelper\ERPHelper.dll"
+)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('packages\Fody.6.3.0\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.3.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
