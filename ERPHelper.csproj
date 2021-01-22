@@ -185,14 +185,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="app.config" />
     <None Include="FodyWeavers.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="LICENSE" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
+    <None Include="README.md" />
     <None Include="Resources\Save_16x.png" />
   </ItemGroup>
   <ItemGroup>

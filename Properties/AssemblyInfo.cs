@@ -33,8 +33,7 @@ Credits
   - https://github.com/Fody/Costura
 - HTMLAgilityPack
   - https://github.com/zzzprojects/
-  - html-agility-pack/blob/master/
-  LICENSE
+    html-agility-pack/blob/master/
   - https://html-agility-pack.net/
 - Saxon - HE
   - https://licenses.nuget.org/MPL-2.0
