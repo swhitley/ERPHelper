@@ -32,7 +32,9 @@ ERP Helper is an MIT-licensed open source project with its ongoing development m
 ERP Helper is compatible with Workday®
 \
 It is not sponsored, affiliated with, or endorsed by Workday.
+
 Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
+
 - NppPlugin .NET 
   - https://github.com/Fody/Fody/blob/master/License.txt
   - https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net
