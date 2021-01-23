@@ -47,7 +47,7 @@ Notepad++ is a free (as in “free speech” and also as in “free beer”) sou
   - https://licenses.nuget.org/MIT
   - https://github.com/Fody/Costura
 - HTMLAgilityPack
-  - https://github.com/zzzprojects/html-agility-pack/blob/master/
+  - https://github.com/zzzprojects/html-agility-pack/
   - https://html-agility-pack.net/
 - Saxon - HE
   - https://licenses.nuget.org/MPL-2.0
