@@ -2,14 +2,16 @@
 
 ## Description
 
-**ERP Helper** is a Notepad++ plugin with a set of utilities for developing ERP integrations. It includes XSL transformation and Workday® API SOAP calls.
+**ERP Helper** is a Notepad++ plugin with a set of utilities for developing ERP integrations. It includes XSL transformation and WorkdayÂ® API SOAP calls.
+
+![image](https://user-images.githubusercontent.com/413552/105565823-a161c880-5cdd-11eb-888a-fc497f44b1bc.png)
 
 
 ## How to install
 
-The easiest way to install this plugin is by using the Plugins Admin tool. From the “Plugins” menu, choose “Plugins Admin...” Select the “ERP Helper” plugin and choose “install.” Follow the instructions on the screen.
+The easiest way to install this plugin is by using the Plugins Admin tool. From the â€œPluginsâ€ menu, choose â€œPlugins Admin...â€ Select the â€œERP Helperâ€ plugin and choose â€œinstall.â€ Follow the instructions on the screen.
 
-To manually install the plugin, create a folder named “ERPHelper” in the plugins directory. Copy ERPHelper.dll to the new directory. Then (re)start Notepad++.
+To manually install the plugin, create a folder named â€œERPHelperâ€ in the plugins directory. Copy ERPHelper.dll to the new directory. Then (re)start Notepad++.
 
 
 ### Features
@@ -29,11 +31,11 @@ ERP Helper is an MIT-licensed open source project with its ongoing development m
 
 ## Credits
 
-ERP Helper is compatible with Workday®
+ERP Helper is compatible with WorkdayÂ®
 \
 It is not sponsored, affiliated with, or endorsed by Workday.
 
-Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
+Notepad++ is a free (as in â€œfree speechâ€ and also as in â€œfree beerâ€) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
 
 - NppPlugin .NET 
   - https://github.com/Fody/Fody/blob/master/License.txt
@@ -54,7 +56,7 @@ Notepad++ is a free (as in “free speech” and also as in “free beer”) source code
 
 ## About Notepad++
 
-Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
+Notepad++ is a free (as in â€œfree speechâ€ and also as in â€œfree beerâ€) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
 For more information, please visit the [official site](https://notepad-plus-plus.org/).
 
 
