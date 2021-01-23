@@ -1,0 +1,36 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        build_configuration: [Release, Debug]
+        build_platform: [x64, x86]
+        
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet.exe
+      uses: nuget/setup-nuget@v1
+
+    - name: Restore
+      working-directory: .
+      #run: nuget restore packages.config -PackagesDirectory .\packages
+      run: nuget restore ERPHelper.sln
+
+    - name: MSBuild of solution
+      working-directory: .
+      run: msbuild ERPHelper.csproj /m /verbosity:minimal /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
+
+
