@@ -217,10 +217,13 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if exist "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" (
+    <PostBuildEvent>set ERRORLEVEL=0
+if exist "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" (
+    mkdir -p "C:\Program Files (x86)\Notepad++\plugins\ERPHelper"
     copy "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" "C:\Program Files (x86)\Notepad++\plugins\ERPHelper\ERPHelper.dll"
 )
 if exist "C:\Program Files\Notepad++\plugins\ERPHelper.dll" (
+    mkdir -p "C:\Program Files\Notepad++\plugins\ERPHelper"
     copy "C:\Program Files\Notepad++\plugins\ERPHelper.dll" "C:\Program Files\Notepad++\plugins\ERPHelper\ERPHelper.dll"
 )</PostBuildEvent>
   </PropertyGroup>

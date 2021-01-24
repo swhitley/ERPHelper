@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPHelper", "ERPHelper.csproj", "{2985F37E-A0AF-4AD0-A06E-63FEA3D36DC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPHelperTests", "..\ERPHelperTests\ERPHelperTests.csproj", "{B8D78239-2178-45D5-9304-2524891E0454}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPHelperTests", "ERPHelperTests\ERPHelperTests.csproj", "{B8D78239-2178-45D5-9304-2524891E0454}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
