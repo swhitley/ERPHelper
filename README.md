@@ -11,7 +11,13 @@
 
 The easiest way to install this plugin is by using the Plugins Admin tool. From the “Plugins” menu, choose “Plugins Admin...” Select the “ERP Helper” plugin and choose “install.” Follow the instructions on the screen.
 
-To manually install the plugin, create a folder named “ERPHelper” in the plugins directory. Copy ERPHelper.dll to the new directory. Then (re)start Notepad++.
+To manually install the plugin:
+
+1. Download the appropriate release for your version of Notepad++ (x86 or x64) and unzip ERPHelper.dll.\
+https://github.com/swhitley/ERPHelper/releases/tag/Latest
+1. Create a folder named “ERPHelper” in the plugins directory. (\Notepad++\plugins\ERPHelper)
+1. Copy ERPHelper.dll to the new directory. 
+1. (Re)start Notepad++.
 
 
 ### Features
