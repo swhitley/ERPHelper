@@ -38,23 +38,24 @@
             this.btnTransform = new System.Windows.Forms.Button();
             this.lblWarning = new System.Windows.Forms.Label();
             this.tabWDStudioFiles = new System.Windows.Forms.TabPage();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnFilter = new System.Windows.Forms.Button();
-            this.txtFilter = new System.Windows.Forms.TextBox();
-            this.btnFolderSelect = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtWDStudioFolder = new System.Windows.Forms.TextBox();
-            this.treeView1 = new CTreeView();
+            this.pnlTreeView = new System.Windows.Forms.Panel();
+            this.pnlFiles = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel10 = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtWDStudioFolder = new System.Windows.Forms.TextBox();
+            this.btnFolderSelect = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel11 = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtFilter = new System.Windows.Forms.TextBox();
+            this.btnFilter = new System.Windows.Forms.Button();
             this.tabWebSvcs = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblWWS = new System.Windows.Forms.Label();
-            this.cboWWS1 = new System.Windows.Forms.ComboBox();
             this.lblOperation = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboXSD = new System.Windows.Forms.ComboBox();
-            this.chkXSDLinkShow = new System.Windows.Forms.CheckBox();
-            this.txtXSD = new System.Windows.Forms.TextBox();
+            this.lblVersion1 = new System.Windows.Forms.Label();
+            this.txtVersion1 = new System.Windows.Forms.TextBox();
             this.btnGenXML = new System.Windows.Forms.Button();
             this.lnkWWS = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboConnections = new System.Windows.Forms.ComboBox();
             this.btnConns = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label12 = new System.Windows.Forms.Label();
@@ -74,10 +74,9 @@
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboWWS2 = new CComboBox();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtVersion = new System.Windows.Forms.TextBox();
+            this.txtVersion2 = new System.Windows.Forms.TextBox();
             this.lnkApiUrl = new System.Windows.Forms.LinkLabel();
             this.lblPassword = new System.Windows.Forms.Label();
             this.btnGetSOAP = new System.Windows.Forms.Button();
@@ -85,10 +84,19 @@
             this.label9 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.treeView1 = new ERPHelper.CTreeView();
+            this.cboWWS1 = new ERPHelper.CComboBox();
+            this.cboXSD = new ERPHelper.CComboBox();
+            this.cboConnections = new ERPHelper.CComboBox();
+            this.cboWWS2 = new ERPHelper.CComboBox();
             this.tabControl.SuspendLayout();
             this.tabXForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabWDStudioFiles.SuspendLayout();
+            this.pnlTreeView.SuspendLayout();
+            this.pnlFiles.SuspendLayout();
+            this.flowLayoutPanel10.SuspendLayout();
+            this.flowLayoutPanel11.SuspendLayout();
             this.tabWebSvcs.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -192,94 +200,137 @@
             // 
             this.tabWDStudioFiles.AutoScroll = true;
             this.tabWDStudioFiles.BackColor = System.Drawing.SystemColors.Info;
-            this.tabWDStudioFiles.Controls.Add(this.label5);
-            this.tabWDStudioFiles.Controls.Add(this.btnFilter);
-            this.tabWDStudioFiles.Controls.Add(this.txtFilter);
-            this.tabWDStudioFiles.Controls.Add(this.btnFolderSelect);
-            this.tabWDStudioFiles.Controls.Add(this.label4);
-            this.tabWDStudioFiles.Controls.Add(this.txtWDStudioFolder);
-            this.tabWDStudioFiles.Controls.Add(this.treeView1);
-            this.tabWDStudioFiles.Controls.Add(this.label3);
+            this.tabWDStudioFiles.Controls.Add(this.pnlTreeView);
+            this.tabWDStudioFiles.Controls.Add(this.pnlFiles);
             this.tabWDStudioFiles.Location = new System.Drawing.Point(114, 4);
             this.tabWDStudioFiles.Name = "tabWDStudioFiles";
             this.tabWDStudioFiles.Padding = new System.Windows.Forms.Padding(3);
             this.tabWDStudioFiles.Size = new System.Drawing.Size(410, 436);
             this.tabWDStudioFiles.TabIndex = 1;
             this.tabWDStudioFiles.Text = "Studio Files";
+            this.tabWDStudioFiles.Resize += new System.EventHandler(this.tabWDStudioFiles_Resize);
+            // 
+            // pnlTreeView
+            // 
+            this.pnlTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlTreeView.AutoSize = true;
+            this.pnlTreeView.Controls.Add(this.treeView1);
+            this.pnlTreeView.Location = new System.Drawing.Point(0, 215);
+            this.pnlTreeView.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.pnlTreeView.Name = "pnlTreeView";
+            this.pnlTreeView.Padding = new System.Windows.Forms.Padding(15, 0, 0, 15);
+            this.pnlTreeView.Size = new System.Drawing.Size(350, 610);
+            this.pnlTreeView.TabIndex = 12;
+            // 
+            // pnlFiles
+            // 
+            this.pnlFiles.Controls.Add(this.label3);
+            this.pnlFiles.Controls.Add(this.label4);
+            this.pnlFiles.Controls.Add(this.flowLayoutPanel10);
+            this.pnlFiles.Controls.Add(this.label5);
+            this.pnlFiles.Controls.Add(this.flowLayoutPanel11);
+            this.pnlFiles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlFiles.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.pnlFiles.Location = new System.Drawing.Point(3, 3);
+            this.pnlFiles.Name = "pnlFiles";
+            this.pnlFiles.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlFiles.Size = new System.Drawing.Size(378, 206);
+            this.pnlFiles.TabIndex = 11;
+            this.pnlFiles.WrapContents = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(13, 13);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(178, 20);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Workday Studio Files";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 48);
+            this.label4.Margin = new System.Windows.Forms.Padding(3, 15, 3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(205, 20);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Workday Studio Workspace";
+            // 
+            // flowLayoutPanel10
+            // 
+            this.flowLayoutPanel10.Controls.Add(this.txtWDStudioFolder);
+            this.flowLayoutPanel10.Controls.Add(this.btnFolderSelect);
+            this.flowLayoutPanel10.Location = new System.Drawing.Point(13, 68);
+            this.flowLayoutPanel10.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.flowLayoutPanel10.Name = "flowLayoutPanel10";
+            this.flowLayoutPanel10.Size = new System.Drawing.Size(362, 46);
+            this.flowLayoutPanel10.TabIndex = 12;
+            // 
+            // txtWDStudioFolder
+            // 
+            this.txtWDStudioFolder.Location = new System.Drawing.Point(3, 3);
+            this.txtWDStudioFolder.Name = "txtWDStudioFolder";
+            this.txtWDStudioFolder.Size = new System.Drawing.Size(288, 26);
+            this.txtWDStudioFolder.TabIndex = 5;
+            // 
+            // btnFolderSelect
+            // 
+            this.btnFolderSelect.Location = new System.Drawing.Point(297, 0);
+            this.btnFolderSelect.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.btnFolderSelect.Name = "btnFolderSelect";
+            this.btnFolderSelect.Size = new System.Drawing.Size(32, 32);
+            this.btnFolderSelect.TabIndex = 6;
+            this.btnFolderSelect.Text = "...";
+            this.btnFolderSelect.UseVisualStyleBackColor = true;
+            this.btnFolderSelect.Click += new System.EventHandler(this.btnFolderSelect_Click);
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 135);
+            this.label5.Location = new System.Drawing.Point(13, 127);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 20);
-            this.label5.TabIndex = 4;
+            this.label5.TabIndex = 10;
             this.label5.Text = "File Filter";
+            // 
+            // flowLayoutPanel11
+            // 
+            this.flowLayoutPanel11.Controls.Add(this.txtFilter);
+            this.flowLayoutPanel11.Controls.Add(this.btnFilter);
+            this.flowLayoutPanel11.Location = new System.Drawing.Point(13, 147);
+            this.flowLayoutPanel11.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.flowLayoutPanel11.Name = "flowLayoutPanel11";
+            this.flowLayoutPanel11.Size = new System.Drawing.Size(353, 47);
+            this.flowLayoutPanel11.TabIndex = 13;
+            // 
+            // txtFilter
+            // 
+            this.txtFilter.Location = new System.Drawing.Point(3, 3);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.Size = new System.Drawing.Size(288, 26);
+            this.txtFilter.TabIndex = 8;
+            this.txtFilter.Text = "*.xslt, *.xml, *.xsl";
             // 
             // btnFilter
             // 
             this.btnFilter.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnFilter.BackgroundImage = global::ERPHelper.Properties.Resources.Filter_16x;
             this.btnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFilter.Location = new System.Drawing.Point(310, 158);
+            this.btnFilter.Location = new System.Drawing.Point(297, 0);
+            this.btnFilter.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(32, 32);
-            this.btnFilter.TabIndex = 3;
+            this.btnFilter.TabIndex = 9;
             this.btnFilter.Text = "...";
             this.btnFilter.UseVisualStyleBackColor = false;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
-            // 
-            // txtFilter
-            // 
-            this.txtFilter.Location = new System.Drawing.Point(16, 161);
-            this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(288, 26);
-            this.txtFilter.TabIndex = 2;
-            this.txtFilter.Text = "*.xslt, *.xml, *.xsl";
-            // 
-            // btnFolderSelect
-            // 
-            this.btnFolderSelect.Location = new System.Drawing.Point(310, 77);
-            this.btnFolderSelect.Name = "btnFolderSelect";
-            this.btnFolderSelect.Size = new System.Drawing.Size(32, 32);
-            this.btnFolderSelect.TabIndex = 1;
-            this.btnFolderSelect.Text = "...";
-            this.btnFolderSelect.UseVisualStyleBackColor = true;
-            this.btnFolderSelect.Click += new System.EventHandler(this.btnFolderSelect_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(205, 20);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Workday Studio Workspace";
-            // 
-            // txtWDStudioFolder
-            // 
-            this.txtWDStudioFolder.Location = new System.Drawing.Point(16, 83);
-            this.txtWDStudioFolder.Name = "txtWDStudioFolder";
-            this.txtWDStudioFolder.Size = new System.Drawing.Size(288, 26);
-            this.txtWDStudioFolder.TabIndex = 0;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(16, 196);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(326, 600);
-            this.treeView1.TabIndex = 4;
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(9, 17);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(178, 20);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Workday Studio Files";
             // 
             // tabWebSvcs
             // 
@@ -299,13 +350,14 @@
             this.flowLayoutPanel1.Controls.Add(this.cboWWS1);
             this.flowLayoutPanel1.Controls.Add(this.lblOperation);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
-            this.flowLayoutPanel1.Controls.Add(this.chkXSDLinkShow);
-            this.flowLayoutPanel1.Controls.Add(this.txtXSD);
+            this.flowLayoutPanel1.Controls.Add(this.lblVersion1);
+            this.flowLayoutPanel1.Controls.Add(this.txtVersion1);
             this.flowLayoutPanel1.Controls.Add(this.btnGenXML);
             this.flowLayoutPanel1.Controls.Add(this.lnkWWS);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 52);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 52);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(395, 418);
             this.flowLayoutPanel1.TabIndex = 13;
             // 
@@ -313,27 +365,18 @@
             // 
             this.lblWWS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblWWS.AutoSize = true;
-            this.lblWWS.Location = new System.Drawing.Point(3, 0);
+            this.lblWWS.Location = new System.Drawing.Point(6, 3);
             this.lblWWS.Name = "lblWWS";
             this.lblWWS.Size = new System.Drawing.Size(61, 20);
             this.lblWWS.TabIndex = 22;
             this.lblWWS.Text = "Service";
             this.lblWWS.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // cboWWS1
-            // 
-            this.cboWWS1.FormattingEnabled = true;
-            this.cboWWS1.Location = new System.Drawing.Point(3, 23);
-            this.cboWWS1.Name = "cboWWS1";
-            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS1.TabIndex = 0;
-            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
-            // 
             // lblOperation
             // 
             this.lblOperation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblOperation.AutoSize = true;
-            this.lblOperation.Location = new System.Drawing.Point(3, 74);
+            this.lblOperation.Location = new System.Drawing.Point(6, 77);
             this.lblOperation.Margin = new System.Windows.Forms.Padding(3, 20, 3, 0);
             this.lblOperation.Name = "lblOperation";
             this.lblOperation.Size = new System.Drawing.Size(79, 20);
@@ -344,43 +387,34 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.cboXSD);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 97);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 100);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(387, 40);
             this.flowLayoutPanel2.TabIndex = 20;
             // 
-            // cboXSD
+            // lblVersion1
             // 
-            this.cboXSD.FormattingEnabled = true;
-            this.cboXSD.Location = new System.Drawing.Point(3, 3);
-            this.cboXSD.Name = "cboXSD";
-            this.cboXSD.Size = new System.Drawing.Size(343, 28);
-            this.cboXSD.TabIndex = 1;
-            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
+            this.lblVersion1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblVersion1.AutoSize = true;
+            this.lblVersion1.Location = new System.Drawing.Point(7, 163);
+            this.lblVersion1.Margin = new System.Windows.Forms.Padding(4, 20, 3, 0);
+            this.lblVersion1.Name = "lblVersion1";
+            this.lblVersion1.Size = new System.Drawing.Size(63, 20);
+            this.lblVersion1.TabIndex = 24;
+            this.lblVersion1.Text = "Version";
             // 
-            // chkXSDLinkShow
+            // txtVersion1
             // 
-            this.chkXSDLinkShow.AutoSize = true;
-            this.chkXSDLinkShow.Location = new System.Drawing.Point(3, 143);
-            this.chkXSDLinkShow.Name = "chkXSDLinkShow";
-            this.chkXSDLinkShow.Size = new System.Drawing.Size(131, 24);
-            this.chkXSDLinkShow.TabIndex = 2;
-            this.chkXSDLinkShow.Text = "Override URL";
-            this.chkXSDLinkShow.UseVisualStyleBackColor = true;
-            this.chkXSDLinkShow.CheckedChanged += new System.EventHandler(this.chkXSDLinkShow_CheckedChanged);
-            // 
-            // txtXSD
-            // 
-            this.txtXSD.Location = new System.Drawing.Point(3, 173);
-            this.txtXSD.Name = "txtXSD";
-            this.txtXSD.Size = new System.Drawing.Size(380, 26);
-            this.txtXSD.TabIndex = 3;
-            this.txtXSD.Visible = false;
-            this.txtXSD.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtXSD_KeyUp);
+            this.txtVersion1.Location = new System.Drawing.Point(9, 186);
+            this.txtVersion1.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.txtVersion1.Name = "txtVersion1";
+            this.txtVersion1.Size = new System.Drawing.Size(100, 26);
+            this.txtVersion1.TabIndex = 25;
+            this.txtVersion1.TextChanged += new System.EventHandler(this.txtVersion1_TextChanged);
             // 
             // btnGenXML
             // 
-            this.btnGenXML.Location = new System.Drawing.Point(3, 227);
+            this.btnGenXML.Location = new System.Drawing.Point(6, 240);
             this.btnGenXML.Margin = new System.Windows.Forms.Padding(3, 25, 3, 3);
             this.btnGenXML.Name = "btnGenXML";
             this.btnGenXML.Size = new System.Drawing.Size(208, 38);
@@ -392,7 +426,7 @@
             // lnkWWS
             // 
             this.lnkWWS.AutoSize = true;
-            this.lnkWWS.Location = new System.Drawing.Point(3, 288);
+            this.lnkWWS.Location = new System.Drawing.Point(6, 301);
             this.lnkWWS.Margin = new System.Windows.Forms.Padding(3, 20, 3, 0);
             this.lnkWWS.Name = "lnkWWS";
             this.lnkWWS.Size = new System.Drawing.Size(294, 20);
@@ -405,7 +439,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(7, 16);
+            this.label7.Location = new System.Drawing.Point(11, 16);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(118, 20);
             this.label7.TabIndex = 5;
@@ -477,15 +511,6 @@
             this.flowLayoutPanel8.Size = new System.Drawing.Size(366, 42);
             this.flowLayoutPanel8.TabIndex = 35;
             this.flowLayoutPanel8.WrapContents = false;
-            // 
-            // cboConnections
-            // 
-            this.cboConnections.FormattingEnabled = true;
-            this.cboConnections.Location = new System.Drawing.Point(3, 3);
-            this.cboConnections.Name = "cboConnections";
-            this.cboConnections.Size = new System.Drawing.Size(309, 28);
-            this.cboConnections.TabIndex = 33;
-            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
             // 
             // btnConns
             // 
@@ -582,19 +607,10 @@
             this.flowLayoutPanel4.TabIndex = 22;
             this.flowLayoutPanel4.WrapContents = false;
             // 
-            // cboWWS2
-            // 
-            this.cboWWS2.FormattingEnabled = true;
-            this.cboWWS2.Location = new System.Drawing.Point(3, 3);
-            this.cboWWS2.Name = "cboWWS2";
-            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS2.TabIndex = 22;
-            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
-            // 
             // flowLayoutPanel5
             // 
             this.flowLayoutPanel5.Controls.Add(this.label11);
-            this.flowLayoutPanel5.Controls.Add(this.txtVersion);
+            this.flowLayoutPanel5.Controls.Add(this.txtVersion2);
             this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 37);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
             this.flowLayoutPanel5.Size = new System.Drawing.Size(200, 39);
@@ -611,13 +627,13 @@
             this.label11.TabIndex = 26;
             this.label11.Text = "Version";
             // 
-            // txtVersion
+            // txtVersion2
             // 
-            this.txtVersion.Location = new System.Drawing.Point(72, 3);
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(79, 26);
-            this.txtVersion.TabIndex = 24;
-            this.txtVersion.TextChanged += new System.EventHandler(this.txtVersion_TextChanged);
+            this.txtVersion2.Location = new System.Drawing.Point(72, 3);
+            this.txtVersion2.Name = "txtVersion2";
+            this.txtVersion2.Size = new System.Drawing.Size(79, 26);
+            this.txtVersion2.TabIndex = 24;
+            this.txtVersion2.TextChanged += new System.EventHandler(this.txtVersion2_TextChanged);
             // 
             // lnkApiUrl
             // 
@@ -635,9 +651,8 @@
             this.lblPassword.AutoSize = true;
             this.lblPassword.Location = new System.Drawing.Point(106, 219);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(87, 20);
+            this.lblPassword.Size = new System.Drawing.Size(0, 20);
             this.lblPassword.TabIndex = 8;
-            this.lblPassword.Text = "";
             this.lblPassword.Visible = false;
             // 
             // btnGetSOAP
@@ -664,7 +679,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(15, 15);
+            this.label9.Location = new System.Drawing.Point(11, 16);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(82, 20);
             this.label9.TabIndex = 0;
@@ -676,10 +691,58 @@
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 100;
             // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.treeView1.Location = new System.Drawing.Point(15, 0);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(335, 595);
+            this.treeView1.TabIndex = 7;
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            // 
+            // cboWWS1
+            // 
+            this.cboWWS1.FormattingEnabled = true;
+            this.cboWWS1.Location = new System.Drawing.Point(6, 26);
+            this.cboWWS1.Name = "cboWWS1";
+            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS1.TabIndex = 0;
+            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
+            // 
+            // cboXSD
+            // 
+            this.cboXSD.FormattingEnabled = true;
+            this.cboXSD.Location = new System.Drawing.Point(3, 3);
+            this.cboXSD.Name = "cboXSD";
+            this.cboXSD.Size = new System.Drawing.Size(343, 28);
+            this.cboXSD.TabIndex = 1;
+            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
+            // 
+            // cboConnections
+            // 
+            this.cboConnections.FormattingEnabled = true;
+            this.cboConnections.Location = new System.Drawing.Point(3, 3);
+            this.cboConnections.Name = "cboConnections";
+            this.cboConnections.Size = new System.Drawing.Size(309, 28);
+            this.cboConnections.TabIndex = 33;
+            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
+            // 
+            // cboWWS2
+            // 
+            this.cboWWS2.FormattingEnabled = true;
+            this.cboWWS2.Location = new System.Drawing.Point(3, 3);
+            this.cboWWS2.Name = "cboWWS2";
+            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS2.TabIndex = 22;
+            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
+            // 
             // WDMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(528, 444);
             this.Controls.Add(this.tabControl);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -693,6 +756,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabWDStudioFiles.ResumeLayout(false);
             this.tabWDStudioFiles.PerformLayout();
+            this.pnlTreeView.ResumeLayout(false);
+            this.pnlFiles.ResumeLayout(false);
+            this.pnlFiles.PerformLayout();
+            this.flowLayoutPanel10.ResumeLayout(false);
+            this.flowLayoutPanel10.PerformLayout();
+            this.flowLayoutPanel11.ResumeLayout(false);
+            this.flowLayoutPanel11.PerformLayout();
             this.tabWebSvcs.ResumeLayout(false);
             this.tabWebSvcs.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -726,15 +796,7 @@
         private System.Windows.Forms.Button btnTransform;
         private System.Windows.Forms.Label lblWarning;
         private System.Windows.Forms.TabPage tabWDStudioFiles;
-        private CTreeView treeView1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnFolderSelect;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtWDStudioFolder;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button btnFilter;
-        private System.Windows.Forms.TextBox txtFilter;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabPage tabWebSvcs;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TabPage tabAPICalls;
@@ -745,21 +807,19 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label lblOperation;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.ComboBox cboXSD;
-        private System.Windows.Forms.CheckBox chkXSDLinkShow;
-        private System.Windows.Forms.TextBox txtXSD;
+        private CComboBox cboXSD;
         private System.Windows.Forms.Button btnGenXML;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private CComboBox cboWWS2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtVersion;
+        private System.Windows.Forms.TextBox txtVersion2;
         private System.Windows.Forms.LinkLabel lnkApiUrl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel8;
-        private System.Windows.Forms.ComboBox cboConnections;
+        private CComboBox cboConnections;
         private System.Windows.Forms.Button btnConns;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label12;
@@ -768,11 +828,25 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Label lblWWS;
-        private System.Windows.Forms.ComboBox cboWWS1;
+        private CComboBox cboWWS1;
         private System.Windows.Forms.LinkLabel lnkWWS;
         private System.Windows.Forms.LinkLabel lnkXFormInst;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel9;
         private System.Windows.Forms.LinkLabel lnkCallAPIInst;
+        private CTreeView treeView1;
+        private System.Windows.Forms.FlowLayoutPanel pnlFiles;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.TextBox txtFilter;
+        private System.Windows.Forms.Button btnFolderSelect;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtWDStudioFolder;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel10;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel11;
+        private System.Windows.Forms.Panel pnlTreeView;
+        private System.Windows.Forms.Label lblVersion1;
+        private System.Windows.Forms.TextBox txtVersion1;
     }
 }

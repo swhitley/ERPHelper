@@ -10,6 +10,7 @@ using System.Xml;
 using System.Text;
 using System.Xml.Linq;
 using System.Text.Json;
+using System.Reflection;
 
 namespace ERPHelper
 {
@@ -18,12 +19,18 @@ namespace ERPHelper
         static INotepadPPGateway notepad = new NotepadPPGateway();
         static IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
         static Dictionary<string, string> wdWebServices = new Dictionary<string, string>();
-        const string WWSURL = "https://community.workday.com/sites/default/files/file-hosting/productionapi/index.html";
-        const string WWSFILE = "ERPHelperWebServices.txt";
+        const string WWSURI = "https://community.workday.com/sites/default/files/file-hosting/productionapi/";
+        const string WWSURL = WWSURI + "index.html";
+        const string WWSSAMPLE = WWSURI + "{0}/{1}/samples/{2}.xml";
+        const string wwsFilePart = "ERPHelperWebServices";
+        string wwsFile = wwsFilePart + Assembly.GetExecutingAssembly().GetName().Version.ToString() + ".txt";
 
         public WDMainForm()
         {
             InitializeComponent();
+
+            string verDefault = "";
+
             try
             {
                 Cursor = Cursors.WaitCursor;
@@ -36,22 +43,55 @@ namespace ERPHelper
                 string wdWebServicesURL = Settings.Get(IniSection.WDWebServices, IniKey.URL);
                 string iniFolder = Path.GetDirectoryName(Settings.iniFilePath);
 
-                if (String.IsNullOrEmpty(wdWebServicesURL))
+
+                if (!File.Exists(iniFolder + "\\" + wwsFile))
                 {
-                    Settings.Set(IniSection.WDWebServices, IniKey.URL, WWSURL);
-                    wdWebServices = WDWebService.Download(WWSURL);
-                    File.WriteAllText(iniFolder + "\\" + WWSFILE, JsonSerializer.Serialize(wdWebServices));
+                    try
+                    {
+                        // Clear any older versions
+                        foreach(string file in Directory.GetFiles(iniFolder, wwsFilePart + "*.*"))
+                        {
+                            File.Delete(file);
+                        }
+                        wdWebServices = WDWebService.Download(WWSURL);
+                        File.WriteAllText(iniFolder + "\\" + wwsFile, JsonSerializer.Serialize(wdWebServices));
+                    }
+                    finally
+                    {
+                        Settings.Set(IniSection.WDWebServices, IniKey.URL, WWSURL);
+                    }
                 }
                 else
                 {
-                    wdWebServices = WDWebService.Load(File.ReadAllText(iniFolder + "\\" + WWSFILE));
+                    try
+                    {
+                        wdWebServices = WDWebService.Load(File.ReadAllText(iniFolder + "\\" + wwsFile));
+                    }
+                    catch(Exception ex)
+                    {
+                        Settings.Set(IniSection.WDWebServices, IniKey.URL, "");
+                    }
+                }
+                foreach(KeyValuePair<string,string> service in wdWebServices)
+                {
+                    try
+                    {
+                        Uri uri = new Uri(service.Key);
+                        verDefault = uri.Segments[uri.Segments.Length - 2].Replace("/","");
+                    }
+                    catch 
+                    { 
+                        // ignore exception
+                    }
+                    break;
                 }
 
                 // Turn Off Event Handling During Init
                 this.cboWWS1.SelectedIndexChanged -= new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
                 this.cboWWS2.SelectedIndexChanged -= new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
                 this.cboXSD.SelectedIndexChanged -= new System.EventHandler(this.cboXSD_SelectedIndexChanged);
-                this.txtVersion.TextChanged -= new System.EventHandler(this.txtVersion_TextChanged);
+                this.txtVersion1.TextChanged -= new System.EventHandler(this.txtVersion1_TextChanged);
+                this.txtVersion2.TextChanged -= new System.EventHandler(this.txtVersion2_TextChanged);
 
                 // Web Services
                 cboWWS1.DisplayMember = "Value";
@@ -81,23 +121,27 @@ namespace ERPHelper
 
                 // Web Services
                 cboWWS1.SelectedIndex = cboWWS1.FindStringExact(Settings.Get(IniSection.State, cboWWS1.Name));
-                string xsd = Settings.Get(IniSection.WDWebServices, IniKey.XSD);
-                if (!String.IsNullOrEmpty(xsd))
-                {
-                    txtXSD.Text = xsd;
-                }
-                cboXSD_Load(txtXSD.Text);
+                cboXSD_Load(cboWWS1.ReturnKey());
                 cboXSD.SelectedIndex = cboXSD.FindStringExact(Settings.Get(IniSection.State, cboXSD.Name));
+                txtVersion1.Text = Settings.Get(IniSection.WDWebServices, IniKey.Version);
+                if(String.IsNullOrEmpty(txtVersion1.Text))
+                {
+                    txtVersion1.Text = verDefault;
+                }
 
                 // API
                 cboConnections.SelectedIndex = cboConnections.FindStringExact(Settings.Get(IniSection.State, cboConnections.Name));
                 cboWWS2.SelectedIndex = cboWWS2.FindStringExact(Settings.Get(IniSection.State, cboWWS2.Name));
-                txtVersion.Text = Settings.Get(IniSection.WDWebServices, IniKey.Version);
+                txtVersion2.Text = Settings.Get(IniSection.WDWebServices, IniKey.Version);
                 if (cboConnections.SelectedIndex != ListBox.NoMatches && cboWWS2.SelectedIndex != ListBox.NoMatches)
                 {
                     string conn = cboConnections.SelectedItem.ToString();
                     string service = cboWWS2.ReturnValue();
-                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion.Text);
+                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion2.Text);
+                }
+                if (String.IsNullOrEmpty(txtVersion2.Text))
+                {
+                    txtVersion2.Text = verDefault;
                 }
 
                 // Initial Tab
@@ -118,7 +162,8 @@ namespace ERPHelper
                 this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
                 this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
                 this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
-                this.txtVersion.TextChanged += new System.EventHandler(this.txtVersion_TextChanged);
+                this.txtVersion1.TextChanged += new System.EventHandler(this.txtVersion1_TextChanged);
+                this.txtVersion2.TextChanged += new System.EventHandler(this.txtVersion2_TextChanged);
                 Cursor = Cursors.Default;
             }
         }
@@ -384,23 +429,30 @@ namespace ERPHelper
 
         private void btnGenXML_Click(object sender, EventArgs e)
         {
-            string xml;
+            string sample = "";
+            string url;
 
             try
             {
-                using (var webClient = new WebClient())
+                if (cboWWS1.SelectedIndex != ListBox.NoMatches && cboXSD.SelectedIndex != ListBox.NoMatches && !String.IsNullOrEmpty(txtVersion1.Text))
                 {
-                    xml = webClient.DownloadString(txtXSD.Text);
+                    url = String.Format(WWSSAMPLE, cboWWS1.ReturnValue(), txtVersion1.Text, cboXSD.ReturnValue());
+
+                    using (var webClient = new WebClient())
+                    {
+                        sample = webClient.DownloadString(url);
+                    }
                 }
-
-                KeyValuePair<string, string> item = (KeyValuePair<string, string>)cboXSD.SelectedItem;
-
-                string sample = WDXMLSample.Generate(xml, item.Key);
 
                 if (sample.Length > 0)
                 {
+                    sample = sample.Replace("bsvc:version=\"string\"", "bsvc:version=\"" + txtVersion1.Text + "\"");
                     notepad.FileNew();
-                    editor.SetText(sample + Environment.NewLine);
+                    editor.SetText(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + sample + Environment.NewLine);
+                }
+                else
+                {
+                    throw new Exception("Sample could not be generated.  Check for a valid Service and Operation.");
                 }
             }
             catch(Exception ex)
@@ -415,11 +467,8 @@ namespace ERPHelper
             {
                 try
                 {
-                    KeyValuePair<string, string> item = (KeyValuePair<string, string>)cboWWS1.SelectedItem;
-                    Settings.Set(IniSection.State, cboWWS1.Name, item.Value);
-                    txtXSD.Text = item.Key;
-                    Settings.Set(IniSection.WDWebServices, IniKey.XSD, txtXSD.Text);
-                    cboXSD_Load(txtXSD.Text);
+                    Settings.Set(IniSection.State, cboWWS1.Name, cboWWS1.ReturnValue());
+                    cboXSD_Load(cboWWS1.ReturnKey());
                 }
                 catch (Exception ex)
                 {
@@ -588,21 +637,16 @@ namespace ERPHelper
             }
         }
 
-        private void chkXSDLinkShow_CheckedChanged(object sender, EventArgs e)
-        {
-            txtXSD.Visible = chkXSDLinkShow.Checked;
-        }
-
-        private void txtVersion_TextChanged(object sender, EventArgs e)
+        private void txtVersion2_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion.Text);
+                Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion2.Text);
                 if (cboConnections.SelectedIndex != ListBox.NoMatches)
                 {
                     string conn = cboConnections.SelectedItem.ToString();
                     string service = cboWWS2.ReturnValue();
-                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion.Text);
+                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion2.Text);
                 }
             }
             catch (Exception ex)
@@ -617,11 +661,10 @@ namespace ERPHelper
             {
                 try
                 {
-                    KeyValuePair<string, string> item = (KeyValuePair<string, string>)cboWWS2.SelectedItem;
-                    Settings.Set(IniSection.State, cboWWS2.Name, item.Value);
+                    Settings.Set(IniSection.State, cboWWS2.Name,cboWWS2.ReturnValue());
                     string conn = cboConnections.SelectedItem.ToString();
-                    string service = item.Value;
-                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion.Text);
+                    string service = cboWWS2.ReturnValue();
+                    lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion2.Text);
                 }
                 catch (Exception ex)
                 {
@@ -636,7 +679,7 @@ namespace ERPHelper
             {
                 try
                 {
-                    Settings.Set(IniSection.State, cboXSD.Name, ((KeyValuePair<string, string>)cboXSD.SelectedItem).Value);
+                    Settings.Set(IniSection.State, cboXSD.Name, cboXSD.ReturnValue());
                 }
                 catch (Exception ex)
                 {
@@ -674,20 +717,20 @@ namespace ERPHelper
             toolTip1.SetToolTip(lnkCallAPIInst, Properties.Resources.Instructions_CallAPI);
         }
 
-        private void txtXSD_KeyUp(object sender, KeyEventArgs e)
+        private void tabWDStudioFiles_Resize(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    Settings.Set(IniSection.WDWebServices, IniKey.XSD, txtXSD.Text);
-                    cboXSD_Load(txtXSD.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error saving the XSD link. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            // Addresses a bug in Winforms that was hiding control borders on resize.
+            this.Refresh();
+        }
+
+        private void txtVersion1_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion1.Text);
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

@@ -20,6 +20,16 @@ namespace ERPHelper
             }
         }
 
+        public string ReturnKey()
+        {
+            if (this.SelectedIndex != ListBox.NoMatches)
+            {
+                return ((KeyValuePair<string, string>)this.SelectedItem).Key.ToString();
+            }
+
+            return "";
+        }
+
         public string ReturnValue()
         {
             if (this.SelectedIndex != ListBox.NoMatches)
