@@ -32,7 +32,9 @@ Open Notepad++, select **Plugins / ERP Helper**.
 
 ## Supporting ERP Helper
 ERP Helper is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider the options below:
-- [Become a backer or sponsor on Patreon.](https://www.patreon.com/whitleymedia)
+
+- [Make a donation](https://www.paypal.com/donate?hosted_button_id=3MH4XMQVUB6EW)
+- [Become a backer or sponsor on Patreon](https://www.patreon.com/whitleymedia)
 
 
 ## Credits
