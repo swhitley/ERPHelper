@@ -24,12 +24,11 @@ namespace ERPHelper
         const string WWSSAMPLE = WWSURI + "{0}/{1}/samples/{2}.xml";
         const string wwsFilePart = "ERPHelperWebServices";
         string wwsFile = wwsFilePart + Assembly.GetExecutingAssembly().GetName().Version.ToString() + ".txt";
+        static string verDefault = "";
 
         public WDMainForm()
         {
             InitializeComponent();
-
-            string verDefault = "";
 
             try
             {
@@ -641,6 +640,10 @@ namespace ERPHelper
         {
             try
             {
+                if (String.IsNullOrEmpty(txtVersion2.Text))
+                {
+                    txtVersion2.Text = verDefault;
+                }
                 Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion2.Text);
                 if (cboConnections.SelectedIndex != ListBox.NoMatches)
                 {
@@ -725,6 +728,10 @@ namespace ERPHelper
 
         private void txtVersion1_TextChanged(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(txtVersion1.Text))
+            {
+                txtVersion1.Text = verDefault;
+            }
             Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion1.Text);
         }
 
