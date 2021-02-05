@@ -30,7 +30,6 @@ namespace ERPHelper.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lstConnections = new ERPHelper.CListBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
@@ -41,7 +40,6 @@ namespace ERPHelper.Forms
             this.lblName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblConnURL = new System.Windows.Forms.Label();
-            this.cboConnEnv = new ERPHelper.CComboBox();
             this.lnkConnURL = new System.Windows.Forms.LinkLabel();
             this.lblTenant = new System.Windows.Forms.Label();
             this.txtTenant = new System.Windows.Forms.TextBox();
@@ -53,23 +51,16 @@ namespace ERPHelper.Forms
             this.chkSavePassword = new System.Windows.Forms.CheckBox();
             this.lnkSavePassword = new System.Windows.Forms.LinkLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lnkSettings = new System.Windows.Forms.LinkLabel();
+            this.cboConnEnv = new ERPHelper.CComboBox();
+            this.lstConnections = new ERPHelper.CListBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lstConnections
-            // 
-            this.lstConnections.FormattingEnabled = true;
-            this.lstConnections.ItemHeight = 20;
-            this.lstConnections.Location = new System.Drawing.Point(12, 54);
-            this.lstConnections.Name = "lstConnections";
-            this.lstConnections.Size = new System.Drawing.Size(194, 264);
-            this.lstConnections.TabIndex = 0;
-            this.lstConnections.SelectedIndexChanged += new System.EventHandler(this.lstConnections_SelectedIndexChanged);
-            // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(329, 432);
+            this.btnSave.Location = new System.Drawing.Point(345, 493);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 33);
             this.btnSave.TabIndex = 9;
@@ -79,7 +70,7 @@ namespace ERPHelper.Forms
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(410, 432);
+            this.button2.Location = new System.Drawing.Point(426, 493);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 33);
             this.button2.TabIndex = 10;
@@ -89,7 +80,7 @@ namespace ERPHelper.Forms
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(247, 432);
+            this.btnTest.Location = new System.Drawing.Point(263, 493);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 33);
             this.btnTest.TabIndex = 8;
@@ -118,7 +109,7 @@ namespace ERPHelper.Forms
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(410, 497);
+            this.btnClose.Location = new System.Drawing.Point(426, 545);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 33);
             this.btnClose.TabIndex = 12;
@@ -128,7 +119,6 @@ namespace ERPHelper.Forms
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.lblName);
             this.flowLayoutPanel1.Controls.Add(this.txtName);
             this.flowLayoutPanel1.Controls.Add(this.lblConnURL);
@@ -141,27 +131,29 @@ namespace ERPHelper.Forms
             this.flowLayoutPanel1.Controls.Add(this.lblPassword);
             this.flowLayoutPanel1.Controls.Add(this.txtPassword);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
+            this.flowLayoutPanel1.Controls.Add(this.lnkSettings);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(232, 20);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(227, 20);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(269, 406);
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(274, 467);
             this.flowLayoutPanel1.TabIndex = 16;
             this.flowLayoutPanel1.WrapContents = false;
             // 
             // lblName
             // 
             this.lblName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblName.Location = new System.Drawing.Point(0, 3);
+            this.lblName.Location = new System.Drawing.Point(3, 6);
             this.lblName.Margin = new System.Windows.Forms.Padding(0, 3, 3, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(51, 20);
+            this.lblName.Size = new System.Drawing.Size(107, 20);
             this.lblName.TabIndex = 16;
             this.lblName.Text = "Name";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(3, 26);
+            this.txtName.Location = new System.Drawing.Point(6, 29);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(238, 26);
             this.txtName.TabIndex = 1;
@@ -170,28 +162,19 @@ namespace ERPHelper.Forms
             // lblConnURL
             // 
             this.lblConnURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblConnURL.Location = new System.Drawing.Point(0, 65);
+            this.lblConnURL.Location = new System.Drawing.Point(3, 68);
             this.lblConnURL.Margin = new System.Windows.Forms.Padding(0, 10, 3, 0);
             this.lblConnURL.Name = "lblConnURL";
-            this.lblConnURL.Size = new System.Drawing.Size(42, 20);
+            this.lblConnURL.Size = new System.Drawing.Size(107, 20);
             this.lblConnURL.TabIndex = 25;
             this.lblConnURL.Text = "URL";
             this.lblConnURL.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // cboConnEnv
-            // 
-            this.cboConnEnv.FormattingEnabled = true;
-            this.cboConnEnv.Location = new System.Drawing.Point(3, 88);
-            this.cboConnEnv.Name = "cboConnEnv";
-            this.cboConnEnv.Size = new System.Drawing.Size(238, 28);
-            this.cboConnEnv.TabIndex = 2;
-            this.cboConnEnv.SelectedIndexChanged += new System.EventHandler(this.cboConnEnv_SelectedIndexChanged);
             // 
             // lnkConnURL
             // 
             this.lnkConnURL.AutoEllipsis = true;
             this.lnkConnURL.AutoSize = true;
-            this.lnkConnURL.Location = new System.Drawing.Point(3, 119);
+            this.lnkConnURL.Location = new System.Drawing.Point(6, 122);
             this.lnkConnURL.MaximumSize = new System.Drawing.Size(225, 50);
             this.lnkConnURL.MinimumSize = new System.Drawing.Size(225, 50);
             this.lnkConnURL.Name = "lnkConnURL";
@@ -201,51 +184,51 @@ namespace ERPHelper.Forms
             // 
             // lblTenant
             // 
-            this.lblTenant.Location = new System.Drawing.Point(0, 179);
+            this.lblTenant.Location = new System.Drawing.Point(3, 182);
             this.lblTenant.Margin = new System.Windows.Forms.Padding(0, 10, 3, 0);
             this.lblTenant.Name = "lblTenant";
-            this.lblTenant.Size = new System.Drawing.Size(59, 20);
+            this.lblTenant.Size = new System.Drawing.Size(150, 20);
             this.lblTenant.TabIndex = 18;
             this.lblTenant.Text = "Tenant";
             this.lblTenant.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // txtTenant
             // 
-            this.txtTenant.Location = new System.Drawing.Point(3, 202);
+            this.txtTenant.Location = new System.Drawing.Point(6, 205);
             this.txtTenant.Name = "txtTenant";
             this.txtTenant.Size = new System.Drawing.Size(238, 26);
             this.txtTenant.TabIndex = 4;
             // 
             // lblUsername
             // 
-            this.lblUsername.Location = new System.Drawing.Point(0, 241);
+            this.lblUsername.Location = new System.Drawing.Point(3, 244);
             this.lblUsername.Margin = new System.Windows.Forms.Padding(0, 10, 3, 0);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(83, 20);
+            this.lblUsername.Size = new System.Drawing.Size(165, 20);
             this.lblUsername.TabIndex = 20;
             this.lblUsername.Text = "Username";
             this.lblUsername.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(3, 264);
+            this.txtUsername.Location = new System.Drawing.Point(6, 267);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(238, 26);
             this.txtUsername.TabIndex = 5;
             // 
             // lblPassword
             // 
-            this.lblPassword.Location = new System.Drawing.Point(0, 303);
+            this.lblPassword.Location = new System.Drawing.Point(3, 306);
             this.lblPassword.Margin = new System.Windows.Forms.Padding(0, 10, 3, 0);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(78, 20);
+            this.lblPassword.Size = new System.Drawing.Size(132, 20);
             this.lblPassword.TabIndex = 22;
             this.lblPassword.Text = "Password";
             this.lblPassword.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(3, 326);
+            this.txtPassword.Location = new System.Drawing.Point(6, 329);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(238, 26);
             this.txtPassword.TabIndex = 6;
@@ -255,7 +238,7 @@ namespace ERPHelper.Forms
             // 
             this.flowLayoutPanel2.Controls.Add(this.chkSavePassword);
             this.flowLayoutPanel2.Controls.Add(this.lnkSavePassword);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 358);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 361);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(200, 28);
             this.flowLayoutPanel2.TabIndex = 27;
@@ -284,12 +267,42 @@ namespace ERPHelper.Forms
             this.lnkSavePassword.Text = "[?]";
             this.lnkSavePassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSavePassword_LinkClicked);
             // 
+            // lnkSettings
+            // 
+            this.lnkSettings.AutoSize = true;
+            this.lnkSettings.Location = new System.Drawing.Point(6, 392);
+            this.lnkSettings.Name = "lnkSettings";
+            this.lnkSettings.Size = new System.Drawing.Size(171, 20);
+            this.lnkSettings.TabIndex = 28;
+            this.lnkSettings.TabStop = true;
+            this.lnkSettings.Text = "View Configuration File";
+            this.lnkSettings.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSettings_LinkClicked);
+            // 
+            // cboConnEnv
+            // 
+            this.cboConnEnv.FormattingEnabled = true;
+            this.cboConnEnv.Location = new System.Drawing.Point(6, 91);
+            this.cboConnEnv.Name = "cboConnEnv";
+            this.cboConnEnv.Size = new System.Drawing.Size(238, 28);
+            this.cboConnEnv.TabIndex = 2;
+            this.cboConnEnv.SelectedIndexChanged += new System.EventHandler(this.cboConnEnv_SelectedIndexChanged);
+            // 
+            // lstConnections
+            // 
+            this.lstConnections.FormattingEnabled = true;
+            this.lstConnections.ItemHeight = 20;
+            this.lstConnections.Location = new System.Drawing.Point(12, 54);
+            this.lstConnections.Name = "lstConnections";
+            this.lstConnections.Size = new System.Drawing.Size(194, 264);
+            this.lstConnections.TabIndex = 0;
+            this.lstConnections.SelectedIndexChanged += new System.EventHandler(this.lstConnections_SelectedIndexChanged);
+            // 
             // WDConnForm
             // 
             this.AcceptButton = this.btnClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(513, 542);
+            this.ClientSize = new System.Drawing.Size(513, 590);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblConnections);
@@ -304,6 +317,7 @@ namespace ERPHelper.Forms
             this.Name = "WDConnForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Connections";
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -339,5 +353,6 @@ namespace ERPHelper.Forms
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.CheckBox chkSavePassword;
         private System.Windows.Forms.LinkLabel lnkSavePassword;
+        private System.Windows.Forms.LinkLabel lnkSettings;
     }
 }

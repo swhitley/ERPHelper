@@ -17,7 +17,7 @@ namespace ERPHelper
     public partial class WDMainForm : Form
     {
         static INotepadPPGateway notepad = new NotepadPPGateway();
-        static IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
+        static ICScintillaGateway editor = new CScintillaGateway(PluginBase.GetCurrentScintilla());
         static Dictionary<string, string> wdWebServices = new Dictionary<string, string>();
         const string WWSURI = "https://community.workday.com/sites/default/files/file-hosting/productionapi/";
         const string WWSURL = WWSURI + "index.html";
@@ -298,7 +298,7 @@ namespace ERPHelper
                         working = "";
                         Application.DoEvents();
                         var data = SaxonXForm.TransformXml(xmlData, xslData);
-                        editor.SetText(data + Environment.NewLine);
+                        editor.SetXML(data + Environment.NewLine);
                     }
                     else
                     {
@@ -447,7 +447,7 @@ namespace ERPHelper
                 {
                     sample = sample.Replace("bsvc:version=\"string\"", "bsvc:version=\"" + txtVersion1.Text + "\"");
                     notepad.FileNew();
-                    editor.SetText(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + sample + Environment.NewLine);
+                    editor.SetXML(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + sample + Environment.NewLine);
                 }
                 else
                 {
@@ -546,12 +546,12 @@ namespace ERPHelper
                         byte[] rData = webClient.UploadData(lnkApiUrl.Text, data);
 
                         notepad.FileNew();
-                        editor.SetText(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + XDocument.Parse(Encoding.UTF8.GetString(rData)).ToString() + Environment.NewLine);
+                        editor.SetXML(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + XDocument.Parse(Encoding.UTF8.GetString(rData)).ToString() + Environment.NewLine);
                     }
                 }
                 catch (WebException webEx)
                 {
-                    String responseFromServer = webEx.Message.ToString() + " ";
+                    String responseFromServer = webEx.Message.ToString() + Environment.NewLine;
                     if (webEx.Response != null)
                     {
                         using (WebResponse response = webEx.Response)
@@ -559,12 +559,19 @@ namespace ERPHelper
                             Stream dataRs = response.GetResponseStream();
                             using (StreamReader reader = new StreamReader(dataRs))
                             {
-                                responseFromServer += reader.ReadToEnd();
+                                try
+                                {
+                                    responseFromServer += XDocument.Parse(reader.ReadToEnd());
+                                }
+                                catch
+                                {
+                                    // ignore exception
+                                }
                             }
                         }
                     }
-                    MessageBox.Show(responseFromServer, "Web API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    notepad.FileNew();
+                    editor.SetXML(responseFromServer);
                 }
             }
             catch (Exception ex)
@@ -583,7 +590,7 @@ namespace ERPHelper
                 string xmlData = editor.GetText(chars + 1);
 
                 notepad.FileNew();
-                editor.SetText(WDWebService.WrapSOAP("username", "password", xmlData) + Environment.NewLine);
+                editor.SetXML(WDWebService.WrapSOAP("username", "password", xmlData) + Environment.NewLine);
             }
             catch (Exception ex)
             {

@@ -120,7 +120,8 @@ namespace ERPHelper.Properties {
         ///   Looks up a localized string similar to Use the &apos;Save Password&apos; checkbox to save the encrypted
         ///password in the configuration file for this plugin. 
         ///The decryption method is restricted to your account on
-        ///this machine.  
+        ///this machine.
+        ///
         ///The password will not be saved if the &apos;Save Password&apos;
         ///checkbox is not checked..
         /// </summary>

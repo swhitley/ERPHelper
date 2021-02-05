@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
 namespace ERPHelper.Forms
 {
@@ -80,6 +81,15 @@ namespace ERPHelper.Forms
         {
             try
             {
+                if (txtName.Text.Length == 0)
+                {
+                    throw new Exception("Name is required.");
+                }
+                if(cboConnEnv.SelectedIndex == ListBox.NoMatches)
+                {
+                    throw new Exception("An environment URL must be selected.");
+                }
+
                 txtName.Enabled = false;
                 string conn = txtName.Text;
                 string tenant = txtTenant.Text;
@@ -90,26 +100,6 @@ namespace ERPHelper.Forms
                 bool savePassword = chkSavePassword.Checked;
                 this.Password = password;
                 string url = "";
-
-                if (tenant.Length == 0 || username.Length == 0 || password.Length == 0)
-                {
-                    throw new Exception("Tenant, Username, and Password must be entered.");
-                }
-
-                try
-                {
-                    url = WDWebService.GetServiceURL(((WDURLItem)cboConnEnv.SelectedItem).Key, txtTenant.Text, txtUsername.Text, txtPassword.Text);
-                    if (!(url.Length > 4 && url.Substring(0, 4) == "http"))
-                    {
-                        throw new Exception("Service URL was not returned successfully.");
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Error connecting to Workday. Please verify your tenant and credentials." + Environment.NewLine + ex.Message, "Workday Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
 
                 // New Item
                 if (lstConnections.FindStringExact(txtName.Text) == ListBox.NoMatches)
@@ -126,17 +116,30 @@ namespace ERPHelper.Forms
                     }
                 }
                 Settings.Set(IniSection.Connection, conn, IniKey.Environment, envText);
-                Settings.Set(IniSection.Connection, conn, IniKey.URL, String.Concat(url,  "/", tenant,  "/"));
+                
                 Settings.Set(IniSection.Connection, conn, IniKey.Tenant, tenant);
                 Settings.Set(IniSection.Connection, conn, IniKey.Username, username);
                 Settings.Set(IniSection.Connection, conn, IniKey.SavePassword, savePassword.ToString());
+
+                if (cboConnEnv.SelectedIndex != ListBox.NoMatches && txtTenant.Text.Length > 0
+                    && txtUsername.Text.Length > 0 && txtPassword.Text.Length > 0)
+                {
+                    url = WDWebService.GetServiceURL(((WDURLItem)cboConnEnv.SelectedItem).Key, txtTenant.Text, txtUsername.Text, txtPassword.Text);
+                    url = String.Concat(url, "/", tenant, "/");
+                    Settings.Set(IniSection.Connection, conn, IniKey.URL, url);
+                    lnkConnURL.Text = url;
+                }
+
                 if (chkSavePassword.Checked)
                 {
                     Settings.Set(IniSection.Connection, conn, IniKey.Password, password);
                 }
                 else
                 {
-                    Settings.Set(IniSection.Connection, conn, IniKey.Password, "");
+                    if (txtPassword.Text.Length == 0)
+                    {
+                        Settings.Set(IniSection.Connection, conn, IniKey.Password, "");
+                    }
                 }
                 MessageBox.Show("Saved", "Connection Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -161,6 +164,9 @@ namespace ERPHelper.Forms
                     txtTenant.Text = Settings.Get(IniSection.Connection, conn, IniKey.Tenant);
                     txtUsername.Text = Settings.Get(IniSection.Connection, conn, IniKey.Username);
                     txtPassword.Text = Crypto.Unprotect(Settings.Get(IniSection.Connection, conn, IniKey.Password));
+                    bool savePassword = false;
+                    Boolean.TryParse(Settings.Get(IniSection.Connection, conn, IniKey.SavePassword), out savePassword);
+                    chkSavePassword.Checked = savePassword;
                 }
                 catch(Exception ex)
                 {
@@ -247,6 +253,11 @@ namespace ERPHelper.Forms
         private void lnkSavePassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             toolTip1.SetToolTip(lnkSavePassword, Properties.Resources.Instructions_SavePassword);
+        }
+
+        private void lnkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DOOPEN, 0, Settings.iniFilePath);
         }
     }
 }

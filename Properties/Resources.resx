@@ -160,7 +160,8 @@ but it is not required for the 'Call API' feature.</value>
     <value>Use the 'Save Password' checkbox to save the encrypted
 password in the configuration file for this plugin. 
 The decryption method is restricted to your account on
-this machine.  
+this machine.
+
 The password will not be saved if the 'Save Password'
 checkbox is not checked.</value>
   </data>

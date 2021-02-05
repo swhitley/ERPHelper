@@ -106,6 +106,7 @@
     <Compile Include="Controls\CTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CScintillaGateway.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
