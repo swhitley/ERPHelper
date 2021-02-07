@@ -37,6 +37,7 @@ namespace ERPHelper
                 toolTip1.SetToolTip(lnkXFormInst, Properties.Resources.Instructions_XForm);
                 toolTip1.SetToolTip(lnkCallAPIInst, Properties.Resources.Instructions_CallAPI);
                 toolTip1.SetToolTip(lnkApiUrl, Properties.Resources.Instructions_Click2Copy2Clipboard);
+                toolTip1.SetToolTip(lnkAddlActions, Properties.Resources.Instructions_AdditionalActions);
                 tabControl.DrawItem += new DrawItemEventHandler(tabControl_DrawItem);
                 // Web Services Download
                 string wdWebServicesURL = Settings.Get(IniSection.WDWebServices, IniKey.URL);
@@ -169,15 +170,22 @@ namespace ERPHelper
 
         private void ConnectionsLoad()
         {
-            cboConnections.Items.Clear();
-            string connNames = Settings.Get(IniSection.Connections, IniKey.Names);
-            if (!String.IsNullOrEmpty(connNames))
+            try
             {
-                string[] conns = connNames.Split(',');
-                foreach (string conn in conns)
+                cboConnections.Items.Clear();
+                string connNames = Settings.Get(IniSection.Connections, IniKey.Names);
+                if (!String.IsNullOrEmpty(connNames))
                 {
-                    cboConnections.Items.Add(conn);
+                    string[] conns = connNames.Split(',');
+                    foreach (string conn in conns)
+                    {
+                        cboConnections.Items.Add(conn);
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Connections Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -186,32 +194,39 @@ namespace ERPHelper
             Graphics g = e.Graphics;
             Brush _textBrush;
 
-            // Get the item from the collection.
-            TabPage _tabPage = tabControl.TabPages[e.Index];
-
-            // Get the real bounds for the tab rectangle.
-            Rectangle _tabBounds = tabControl.GetTabRect(e.Index);
-
-            if (e.State == DrawItemState.Selected)
+            try
             {
-                _textBrush = SystemBrushes.ControlText;
-                g.FillRectangle(SystemBrushes.Control, e.Bounds);
+                // Get the item from the collection.
+                TabPage _tabPage = tabControl.TabPages[e.Index];
 
+                // Get the real bounds for the tab rectangle.
+                Rectangle _tabBounds = tabControl.GetTabRect(e.Index);
+
+                if (e.State == DrawItemState.Selected)
+                {
+                    _textBrush = SystemBrushes.ControlText;
+                    g.FillRectangle(SystemBrushes.Control, e.Bounds);
+
+                }
+                else
+                {
+                    _textBrush = SystemBrushes.InactiveCaptionText;
+                    g.FillRectangle(SystemBrushes.InactiveCaption, e.Bounds);
+
+                }
+
+                Font _tabFont = new Font(new FontFamily(SystemFonts.MenuFont.Name), 16.0f, FontStyle.Regular, GraphicsUnit.Pixel);
+
+                // Draw string. Center the text.
+                StringFormat _stringFlags = new StringFormat();
+                _stringFlags.Alignment = StringAlignment.Center;
+                _stringFlags.LineAlignment = StringAlignment.Center;
+                g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
             }
-            else
+            catch(Exception ex)
             {
-                _textBrush = SystemBrushes.InactiveCaptionText;
-                g.FillRectangle(SystemBrushes.InactiveCaption, e.Bounds);
-
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Tab Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            Font _tabFont = new Font(new FontFamily(SystemFonts.MenuFont.Name), 16.0f, FontStyle.Regular, GraphicsUnit.Pixel);
-
-            // Draw string. Center the text.
-            StringFormat _stringFlags = new StringFormat();
-            _stringFlags.Alignment = StringAlignment.Center;
-            _stringFlags.LineAlignment = StringAlignment.Center;
-            g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
         }
 
         private void btnTransform_Click(object sender, EventArgs e)
@@ -349,6 +364,10 @@ namespace ERPHelper
                 }
                              
             }
+            catch(Exception ex)
+            {
+                // ignore exception
+            }
             finally
             {
                 Cursor = Cursors.Default;
@@ -471,7 +490,7 @@ namespace ERPHelper
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "WWS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "WWS Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -481,29 +500,36 @@ namespace ERPHelper
             string xml;
             XmlDocument xmlDoc = new XmlDocument();
 
-            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            try
             {
-                using (var webClient = new WebClient())
+                if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
-                    xml = webClient.DownloadString(url);
-                }
-                xmlDoc.LoadXml(xml);
-                XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
-                ns.AddNamespace("xsd", "http://www.w3.org/2001/XMLSchema");
-                XmlNodeList nodes = xmlDoc.SelectNodes("xsd:schema/xsd:element", ns);
+                    using (var webClient = new WebClient())
+                    {
+                        xml = webClient.DownloadString(url);
+                    }
+                    xmlDoc.LoadXml(xml);
+                    XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
+                    ns.AddNamespace("xsd", "http://www.w3.org/2001/XMLSchema");
+                    XmlNodeList nodes = xmlDoc.SelectNodes("xsd:schema/xsd:element", ns);
 
-                Dictionary<string, string> items = new Dictionary<string, string>();
+                    Dictionary<string, string> items = new Dictionary<string, string>();
 
-                foreach (XmlNode node in nodes)
-                {
-                    string key = node.Attributes["name"].Value;
-                    string value = key;
-                    items.Add(key, value);
+                    foreach (XmlNode node in nodes)
+                    {
+                        string key = node.Attributes["name"].Value;
+                        string value = key;
+                        items.Add(key, value);
+                    }
+                    cboXSD.DataSource = null;
+                    cboXSD.DataSource = new BindingSource(items, null);
+                    cboXSD.DisplayMember = "Value";
+                    cboXSD.ValueMember = "Key";
                 }
-                cboXSD.DataSource = null;
-                cboXSD.DataSource = new BindingSource(items, null);
-                cboXSD.DisplayMember = "Value";
-                cboXSD.ValueMember = "Key";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Load Operations Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -594,7 +620,7 @@ namespace ERPHelper
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "SOAP Generator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "SOAP Generator Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -632,9 +658,14 @@ namespace ERPHelper
                     string version = Settings.Get(IniSection.WDWebServices, IniKey.Version);
                     txtTenant.Text = tenant;
                     txtUsername.Text = Settings.Get(IniSection.Connection, conn, IniKey.Username);
-                    lblPassword.Text = Settings.Get(IniSection.Connection, conn, IniKey.Password);
                     lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, version);
                     Settings.Set(IniSection.State, cboConnections.Name, conn);
+                    lblPassword.Text = "";
+                    string password = Settings.Get(IniSection.Connection, conn, IniKey.Password);
+                    if (!String.IsNullOrEmpty(password))
+                    {
+                        lblPassword.Text = password;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -713,8 +744,15 @@ namespace ERPHelper
 
         private void lnkWWS_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            lnkWWS.LinkVisited = true;
-            System.Diagnostics.Process.Start("https://community.workday.com/sites/default/files/file-hosting/productionapi/index.html");
+            try
+            {
+                lnkWWS.LinkVisited = true;
+                System.Diagnostics.Process.Start("https://community.workday.com/sites/default/files/file-hosting/productionapi/index.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "WWS Link Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void lnkInstructions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -735,16 +773,36 @@ namespace ERPHelper
 
         private void txtVersion1_TextChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtVersion1.Text))
+            try
             {
-                txtVersion1.Text = verDefault;
+                if (String.IsNullOrEmpty(txtVersion1.Text))
+                {
+                    txtVersion1.Text = verDefault;
+                }
+                Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion1.Text);
             }
-            Settings.Set(IniSection.WDWebServices, IniKey.Version, txtVersion1.Text);
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Version Change Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void btnSampleAPIRequest_Click(object sender, EventArgs e)
         {
+            try
+            {
+                notepad.FileNew();
+                editor.SetXML(Properties.Resources.Sample_GetWorkers.Replace("{0}", txtVersion2.Text));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error generating sample file. " + ex.Message, "Sample Request Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
+        private void lnkAddlActions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            toolTip1.SetToolTip(lnkAddlActions, Properties.Resources.Instructions_AdditionalActions);
         }
     }
 }

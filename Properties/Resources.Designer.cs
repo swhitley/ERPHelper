@@ -91,15 +91,29 @@ namespace ERPHelper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Call API
-        ///Calls the Workday API using the current document.  
-        ///A SOAP envelope and body will be automatically wrapped around the request.  
-        ///If an envelope already exists, the wrapper will not be generated.
+        ///   Looks up a localized string similar to Add SOAP Wrapper
         ///
-        ///Get SOAP Wrapper
-        ///Generates a SOAP envelope and body for the current document and creates a new document.
-        ///This feature will create a sample SOAP envelope, 
-        ///but it is not required for the &apos;Call API&apos; feature..
+        ///Generates a SOAP envelope and body for the current
+        ///document and creates a new document.
+        ///
+        ///This action will create a sample SOAP envelope, 
+        ///but it is not required for the &apos;Call API&apos; action..
+        /// </summary>
+        internal static string Instructions_AdditionalActions {
+            get {
+                return ResourceManager.GetString("Instructions.AdditionalActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Call API
+        ///
+        ///Calls the Workday API using the current document.  
+        ///A SOAP envelope and body will be automatically
+        ///wrapped around the request.
+        ///
+        ///If an envelope already exists, the wrapper will
+        ///not be generated..
         /// </summary>
         internal static string Instructions_CallAPI {
             get {
@@ -143,6 +157,22 @@ namespace ERPHelper.Properties {
         internal static string Instructions_XForm {
             get {
                 return ResourceManager.GetString("Instructions.XForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;wd:Get_Workers_Request xmlns:wd=&quot;urn:com.workday/bsvc&quot; wd:version=&quot;{0}&quot;&gt;
+        ///	&lt;wd:Request_References wd:Ignore_Invalid_References=&quot;true&quot; wd:Skip_Non_Existing_Instances=&quot;true&quot;&gt;
+        ///		&lt;wd:Worker_Reference&gt;
+        ///			&lt;wd:ID wd:type=&quot;Employee_ID&quot;&gt;{Employee ID}&lt;/wd:ID&gt;
+        ///		&lt;/wd:Worker_Reference&gt;
+        ///	&lt;/wd:Request_References&gt;
+        ///&lt;/wd:Get_Workers_Request&gt;.
+        /// </summary>
+        internal static string Sample_GetWorkers {
+            get {
+                return ResourceManager.GetString("Sample.GetWorkers", resourceCulture);
             }
         }
         

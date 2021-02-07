@@ -164,6 +164,7 @@ namespace ERPHelper.Forms
                     txtTenant.Text = Settings.Get(IniSection.Connection, conn, IniKey.Tenant);
                     txtUsername.Text = Settings.Get(IniSection.Connection, conn, IniKey.Username);
                     txtPassword.Text = Crypto.Unprotect(Settings.Get(IniSection.Connection, conn, IniKey.Password));
+                    this.Password = Settings.Get(IniSection.Connection, conn, IniKey.Password);
                     bool savePassword = false;
                     Boolean.TryParse(Settings.Get(IniSection.Connection, conn, IniKey.SavePassword), out savePassword);
                     chkSavePassword.Checked = savePassword;
@@ -192,6 +193,7 @@ namespace ERPHelper.Forms
             txtUsername.Text = "";
             chkSavePassword.Checked = false;
             txtPassword.Text = "";
+            this.Password = "";
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -258,6 +260,11 @@ namespace ERPHelper.Forms
         private void lnkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DOOPEN, 0, Settings.iniFilePath);
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

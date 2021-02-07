@@ -135,14 +135,13 @@
   </data>
   <data name="Instructions.CallAPI" xml:space="preserve">
     <value>Call API
-Calls the Workday API using the current document.  
-A SOAP envelope and body will be automatically wrapped around the request.  
-If an envelope already exists, the wrapper will not be generated.
 
-Get SOAP Wrapper
-Generates a SOAP envelope and body for the current document and creates a new document.
-This feature will create a sample SOAP envelope, 
-but it is not required for the 'Call API' feature.</value>
+Calls the Workday API using the current document.  
+A SOAP envelope and body will be automatically
+wrapped around the request.
+
+If an envelope already exists, the wrapper will
+not be generated.</value>
   </data>
   <data name="Instructions.Click2Copy2Clipboard" xml:space="preserve">
     <value>Click to copy to clipboard</value>
@@ -170,5 +169,24 @@ checkbox is not checked.</value>
   </data>
   <data name="WDEnvironments" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WDEnvironments.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Sample.GetWorkers" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;wd:Get_Workers_Request xmlns:wd="urn:com.workday/bsvc" wd:version="{0}"&gt;
+	&lt;wd:Request_References wd:Ignore_Invalid_References="true" wd:Skip_Non_Existing_Instances="true"&gt;
+		&lt;wd:Worker_Reference&gt;
+			&lt;wd:ID wd:type="Employee_ID"&gt;{Employee ID}&lt;/wd:ID&gt;
+		&lt;/wd:Worker_Reference&gt;
+	&lt;/wd:Request_References&gt;
+&lt;/wd:Get_Workers_Request&gt;</value>
+  </data>
+  <data name="Instructions.AdditionalActions" xml:space="preserve">
+    <value>Add SOAP Wrapper
+
+Generates a SOAP envelope and body for the current
+document and creates a new document.
+
+This action will create a sample SOAP envelope, 
+but it is not required for the 'Call API' action.</value>
   </data>
 </root>
