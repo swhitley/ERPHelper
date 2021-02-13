@@ -76,6 +76,10 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.30.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>packages\HtmlAgilityPack.1.11.30\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Octokit, Version=0.48.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Octokit.0.48.0\lib\net46\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="saxon-he-api-10.3, Version=10.3.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
       <HintPath>packages\Saxon-HE.10.3.0\lib\net40\saxon-he-api-10.3.dll</HintPath>
     </Reference>
@@ -83,6 +87,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Security" />
     <Reference Include="System.Text.Json, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
     <Reference Include="System.Web" />
@@ -125,6 +130,7 @@
     <Compile Include="Forms\WDConnForm.Designer.cs">
       <DependentUpon>WDConnForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Octokit.cs" />
     <Compile Include="PluginInfrastructure\ClikeStringArray.cs" />
     <Compile Include="PluginInfrastructure\DllExport\DllExportAttribute.cs" />
     <Compile Include="PluginInfrastructure\Docking_h.cs" />
@@ -141,6 +147,7 @@
     <Compile Include="PluginInfrastructure\Scintilla_iface.cs" />
     <Compile Include="PluginInfrastructure\UnmanagedExports.cs" />
     <Compile Include="PluginInfrastructure\Win32.cs" />
+    <Compile Include="Release.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Forms\WDMainForm.cs">
@@ -218,15 +225,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set ERRORLEVEL=0
-if exist "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" (
-    mkdir -p "C:\Program Files (x86)\Notepad++\plugins\ERPHelper"
-    copy "C:\Program Files (x86)\Notepad++\plugins\ERPHelper.dll" "C:\Program Files (x86)\Notepad++\plugins\ERPHelper\ERPHelper.dll"
-)
-if exist "C:\Program Files\Notepad++\plugins\ERPHelper.dll" (
-    mkdir -p "C:\Program Files\Notepad++\plugins\ERPHelper"
-    copy "C:\Program Files\Notepad++\plugins\ERPHelper.dll" "C:\Program Files\Notepad++\plugins\ERPHelper\ERPHelper.dll"
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('packages\Fody.6.3.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

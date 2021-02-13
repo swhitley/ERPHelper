@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Text.Json;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ERPHelper
 {
@@ -42,7 +43,6 @@ namespace ERPHelper
                 // Web Services Download
                 string wdWebServicesURL = Settings.Get(IniSection.WDWebServices, IniKey.URL);
                 string iniFolder = Path.GetDirectoryName(Settings.iniFilePath);
-
 
                 if (!File.Exists(iniFolder + "\\" + wwsFile))
                 {
@@ -144,11 +144,31 @@ namespace ERPHelper
                     txtVersion2.Text = verDefault;
                 }
 
+                // Hide Update Tab
+                Octokit release = new Octokit();
+                Task<GitHubRelease> task = Task.Run(() => release.GetLatest());
+                task.Wait();
+                if (task.Result != null & task.Result.Version != null & task.Result.Description != null)
+                {
+                    txtVersionDescr.Text = task.Result.Version + Environment.NewLine + task.Result.Description;
+                }
+                if (!task.Result.UpdateAvailable)
+                {
+                  tabControl.Controls.Remove(tabUpdate);
+                }
+
                 // Initial Tab
                 string tab = Settings.Get(IniSection.State, tabControl.Name);
                 if (!String.IsNullOrEmpty(tab))
                 {
-                    tabControl.SelectTab(tab);
+                    try
+                    {
+                        tabControl.SelectTab(tab);
+                    }
+                    catch
+                    {
+                        // ignore exception
+                    }
                 }
 
             }
@@ -452,6 +472,7 @@ namespace ERPHelper
 
             try
             {
+                Cursor = Cursors.WaitCursor;
                 if (cboWWS1.SelectedIndex != ListBox.NoMatches && cboXSD.SelectedIndex != ListBox.NoMatches && !String.IsNullOrEmpty(txtVersion1.Text))
                 {
                     url = String.Format(WWSSAMPLE, cboWWS1.ReturnValue(), txtVersion1.Text, cboXSD.ReturnValue());
@@ -476,6 +497,10 @@ namespace ERPHelper
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Generate XML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
@@ -561,6 +586,7 @@ namespace ERPHelper
 
                 try
                 {
+                    Cursor = Cursors.WaitCursor;
                     using (var webClient = new WebClient())
                     {
                         webClient.Headers.Add("Content-Type", "text/xml; charset=utf-8");
@@ -598,6 +624,10 @@ namespace ERPHelper
                     }
                     notepad.FileNew();
                     editor.SetXML(responseFromServer);
+                }
+                finally
+                {
+                    Cursor = Cursors.Default;
                 }
             }
             catch (Exception ex)
@@ -803,6 +833,19 @@ namespace ERPHelper
         private void lnkAddlActions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             toolTip1.SetToolTip(lnkAddlActions, Properties.Resources.Instructions_AdditionalActions);
+        }
+
+        private void lnkLatestUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                lnkLatestUpdate.LinkVisited = true;
+                System.Diagnostics.Process.Start(lnkLatestUpdate.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Latest Update Link Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
