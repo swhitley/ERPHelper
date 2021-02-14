@@ -2,7 +2,7 @@
 
 ## Description
 
-**ERP Helper** is a Notepad++ plugin with a set of utilities for developing ERP integrations. It includes XSL transformation and Workday® API SOAP calls.
+**ERP Helper** is a [Notepad++](https://notepad-plus-plus.org/) plugin with a set of utilities for developing ERP integrations. It includes XSL transformation and Workday® API SOAP calls.
 
 ![image](https://user-images.githubusercontent.com/413552/105565823-a161c880-5cdd-11eb-888a-fc497f44b1bc.png)
 
@@ -30,6 +30,11 @@ https://github.com/swhitley/ERPHelper/releases/latest
 ### How to use
 Open Notepad++, select **Plugins / ERP Helper**.
 
+## About Notepad++
+
+Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
+For more information, please visit the [official site](https://notepad-plus-plus.org/).
+
 ## Supporting ERP Helper
 ERP Helper is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider the options below:
 
@@ -42,8 +47,6 @@ ERP Helper is an MIT-licensed open source project with its ongoing development m
 ERP Helper is compatible with Workday®
 \
 It is not sponsored, affiliated with, or endorsed by Workday.
-
-Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
 
 - NppPlugin .NET 
   - https://github.com/Fody/Fody/blob/master/License.txt
@@ -60,11 +63,3 @@ Notepad++ is a free (as in “free speech” and also as in “free beer”) sou
 - Saxon - HE
   - https://licenses.nuget.org/MPL-2.0
   - https://www.saxonica.com/
-
-
-## About Notepad++
-
-Notepad++ is a free (as in “free speech” and also as in “free beer”) source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GNU General Public License.
-For more information, please visit the [official site](https://notepad-plus-plus.org/).
-
-
