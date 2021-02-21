@@ -189,4 +189,8 @@ document and creates a new document.
 This action will create a sample SOAP envelope, 
 but it is not required for the 'Call API' action.</value>
   </data>
+  <data name="Sample.Stylesheet" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/&gt;</value>
+  </data>
 </root>

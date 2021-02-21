@@ -279,8 +279,8 @@ namespace ERPHelper
 
                 // Get XML text
                 xmlFileName = notepad.GetCurrentFilePath();
-                int chars = editor.GetTextLength();
-                xmlData = editor.GetText(chars + 1);
+                xmlData = editor.GetAllText();
+                
 
                 // **************************************************
                 // Find the XSLT document
@@ -303,8 +303,7 @@ namespace ERPHelper
                                 if (isDocTypeXML && !foundXSLT)
                                 {
                                     foundXSLT = true;
-                                    chars = editor.GetTextLength();
-                                    xslData = editor.GetText(chars + 1);
+                                    xslData = editor.GetAllText();
                                 }
                                 if (foundXSLT)
                                 {
@@ -580,9 +579,7 @@ namespace ERPHelper
                 string username = txtUsername.Text + "@" + tenant;
                 string password = Crypto.Unprotect(lblPassword.Text);
                 string serviceURL = lnkApiUrl.Text;
-
-                int chars = editor.GetTextLength();
-                string xmlData = editor.GetText(chars + 1);
+                string xmlData = editor.GetAllText();
 
                 try
                 {
@@ -642,9 +639,7 @@ namespace ERPHelper
         {
             try
             {
-                int chars = editor.GetTextLength();
-                string xmlData = editor.GetText(chars + 1);
-
+                string xmlData = editor.GetAllText();
                 notepad.FileNew();
                 editor.SetXML(WDWebService.WrapSOAP("username", "password", xmlData) + Environment.NewLine);
             }

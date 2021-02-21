@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Kbg.NppPluginNET.PluginInfrastructure;
+using Saxon.Api;
+using System.Threading;
 
 namespace ERPHelper
 {
@@ -25,6 +27,7 @@ namespace ERPHelper
             PluginBase.SetCommand(1, "About", AboutBoxShow, new ShortcutKey(false, false, false, Keys.None));
 
             idWDForm = 0;
+       
         }
 
         internal static void SetToolBarIcon()
@@ -38,24 +41,45 @@ namespace ERPHelper
 
         internal static void WDMainFormShow()
         {
-            if (WDMainForm == null)
+            try
             {
-                WDMainForm = new WDMainForm();
+                if (WDMainForm == null)
+                {
+                    WDMainForm = new WDMainForm();
 
-                NppTbData _nppTbData = new NppTbData();
-                _nppTbData.hClient = WDMainForm.Handle;
-                _nppTbData.pszName = "ERP Helper - Workday";
-                _nppTbData.dlgID = idWDForm;
-                _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT;
-                 _nppTbData.pszModuleName = PluginName;
-                IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
-                Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
+                    NppTbData _nppTbData = new NppTbData();
+                    _nppTbData.hClient = WDMainForm.Handle;
+                    _nppTbData.pszName = "ERP Helper - Workday";
+                    _nppTbData.dlgID = idWDForm;
+                    _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT;
+                    _nppTbData.pszModuleName = PluginName;
+                    IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
+                    Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
 
-                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+
+                    // Load Saxon
+                    new Thread(() =>
+                    {
+                        try
+                        {
+                            Thread.CurrentThread.IsBackground = true;
+                            SaxonXForm.TransformXml(Properties.Resources.Sample_GetWorkers, Properties.Resources.Sample_Stylesheet);
+                        }
+                        catch
+                        {
+                            // ignore exception
+                        }
+                    }).Start();
+                }
+                else
+                {
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, WDMainForm.Handle);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, WDMainForm.Handle);
+                MessageBox.Show("Error initializing the plugin. " + ex.Message, "Main", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
