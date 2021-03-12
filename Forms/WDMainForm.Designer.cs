@@ -41,6 +41,7 @@
             this.lblWarning = new System.Windows.Forms.Label();
             this.tabWDStudioFiles = new System.Windows.Forms.TabPage();
             this.pnlTreeView = new System.Windows.Forms.Panel();
+            this.treeView1 = new ERPHelper.CTreeView();
             this.pnlFiles = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -54,8 +55,10 @@
             this.tabWebSvcs = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblWWS = new System.Windows.Forms.Label();
+            this.cboWWS1 = new ERPHelper.CComboBox();
             this.lblOperation = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.cboXSD = new ERPHelper.CComboBox();
             this.lblVersion1 = new System.Windows.Forms.Label();
             this.txtVersion1 = new System.Windows.Forms.TextBox();
             this.btnGenXML = new System.Windows.Forms.Button();
@@ -73,6 +76,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
+            this.cboConnections = new ERPHelper.CComboBox();
             this.btnConns = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label12 = new System.Windows.Forms.Label();
@@ -82,6 +86,7 @@
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.cboWWS2 = new ERPHelper.CComboBox();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
             this.txtVersion2 = new System.Windows.Forms.TextBox();
@@ -93,19 +98,14 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.tabUpdate = new System.Windows.Forms.TabPage();
+            this.txtVersionDescr = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.lnkLatestUpdate = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtVersionDescr = new System.Windows.Forms.TextBox();
-            this.treeView1 = new ERPHelper.CTreeView();
-            this.cboWWS1 = new ERPHelper.CComboBox();
-            this.cboXSD = new ERPHelper.CComboBox();
-            this.cboConnections = new ERPHelper.CComboBox();
-            this.cboWWS2 = new ERPHelper.CComboBox();
             this.tabControl.SuspendLayout();
             this.tabXForm.SuspendLayout();
             this.flowLayoutPanel13.SuspendLayout();
@@ -236,10 +236,11 @@
             // lblWarning
             // 
             this.lblWarning.AutoSize = true;
-            this.lblWarning.Location = new System.Drawing.Point(20, 232);
+            this.lblWarning.Location = new System.Drawing.Point(11, 262);
             this.lblWarning.Name = "lblWarning";
-            this.lblWarning.Size = new System.Drawing.Size(0, 20);
+            this.lblWarning.Size = new System.Drawing.Size(275, 20);
             this.lblWarning.TabIndex = 1;
+            this.lblWarning.Text = "{................................................................}";
             // 
             // tabWDStudioFiles
             // 
@@ -265,8 +266,19 @@
             this.pnlTreeView.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.pnlTreeView.Name = "pnlTreeView";
             this.pnlTreeView.Padding = new System.Windows.Forms.Padding(15, 0, 0, 15);
-            this.pnlTreeView.Size = new System.Drawing.Size(450, 609);
+            this.pnlTreeView.Size = new System.Drawing.Size(424, 609);
             this.pnlTreeView.TabIndex = 12;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.treeView1.Location = new System.Drawing.Point(15, 0);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(409, 594);
+            this.treeView1.TabIndex = 7;
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // pnlFiles
             // 
@@ -418,6 +430,15 @@
             this.lblWWS.Text = "Service";
             this.lblWWS.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // cboWWS1
+            // 
+            this.cboWWS1.FormattingEnabled = true;
+            this.cboWWS1.Location = new System.Drawing.Point(6, 26);
+            this.cboWWS1.Name = "cboWWS1";
+            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS1.TabIndex = 0;
+            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
+            // 
             // lblOperation
             // 
             this.lblOperation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -437,6 +458,15 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(387, 40);
             this.flowLayoutPanel2.TabIndex = 20;
+            // 
+            // cboXSD
+            // 
+            this.cboXSD.FormattingEnabled = true;
+            this.cboXSD.Location = new System.Drawing.Point(3, 3);
+            this.cboXSD.Name = "cboXSD";
+            this.cboXSD.Size = new System.Drawing.Size(343, 28);
+            this.cboXSD.TabIndex = 1;
+            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
             // 
             // lblVersion1
             // 
@@ -627,6 +657,15 @@
             this.flowLayoutPanel8.TabIndex = 35;
             this.flowLayoutPanel8.WrapContents = false;
             // 
+            // cboConnections
+            // 
+            this.cboConnections.FormattingEnabled = true;
+            this.cboConnections.Location = new System.Drawing.Point(3, 3);
+            this.cboConnections.Name = "cboConnections";
+            this.cboConnections.Size = new System.Drawing.Size(308, 28);
+            this.cboConnections.TabIndex = 33;
+            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
+            // 
             // btnConns
             // 
             this.btnConns.Location = new System.Drawing.Point(317, 0);
@@ -722,6 +761,15 @@
             this.flowLayoutPanel4.Size = new System.Drawing.Size(369, 203);
             this.flowLayoutPanel4.TabIndex = 22;
             this.flowLayoutPanel4.WrapContents = false;
+            // 
+            // cboWWS2
+            // 
+            this.cboWWS2.FormattingEnabled = true;
+            this.cboWWS2.Location = new System.Drawing.Point(3, 3);
+            this.cboWWS2.Name = "cboWWS2";
+            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS2.TabIndex = 22;
+            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
             // 
             // flowLayoutPanel5
             // 
@@ -842,6 +890,28 @@
             this.tabUpdate.TabIndex = 4;
             this.tabUpdate.Text = "Update";
             // 
+            // txtVersionDescr
+            // 
+            this.txtVersionDescr.Location = new System.Drawing.Point(14, 326);
+            this.txtVersionDescr.Margin = new System.Windows.Forms.Padding(9, 5, 4, 5);
+            this.txtVersionDescr.Multiline = true;
+            this.txtVersionDescr.Name = "txtVersionDescr";
+            this.txtVersionDescr.ReadOnly = true;
+            this.txtVersionDescr.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtVersionDescr.Size = new System.Drawing.Size(312, 219);
+            this.txtVersionDescr.TabIndex = 24;
+            this.txtVersionDescr.TabStop = false;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(11, 299);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(210, 20);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "About the Latest Version";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -889,75 +959,6 @@
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.IsBalloon = true;
             this.toolTip1.ReshowDelay = 100;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 299);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(210, 20);
-            this.label14.TabIndex = 9;
-            this.label14.Text = "About the Latest Version";
-            // 
-            // txtVersionDescr
-            // 
-            this.txtVersionDescr.Location = new System.Drawing.Point(14, 326);
-            this.txtVersionDescr.Margin = new System.Windows.Forms.Padding(9, 5, 4, 5);
-            this.txtVersionDescr.Multiline = true;
-            this.txtVersionDescr.Name = "txtVersionDescr";
-            this.txtVersionDescr.ReadOnly = true;
-            this.txtVersionDescr.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtVersionDescr.Size = new System.Drawing.Size(312, 219);
-            this.txtVersionDescr.TabIndex = 24;
-            this.txtVersionDescr.TabStop = false;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.treeView1.Location = new System.Drawing.Point(15, 0);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(435, 594);
-            this.treeView1.TabIndex = 7;
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
-            // 
-            // cboWWS1
-            // 
-            this.cboWWS1.FormattingEnabled = true;
-            this.cboWWS1.Location = new System.Drawing.Point(6, 26);
-            this.cboWWS1.Name = "cboWWS1";
-            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS1.TabIndex = 0;
-            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
-            // 
-            // cboXSD
-            // 
-            this.cboXSD.FormattingEnabled = true;
-            this.cboXSD.Location = new System.Drawing.Point(3, 3);
-            this.cboXSD.Name = "cboXSD";
-            this.cboXSD.Size = new System.Drawing.Size(343, 28);
-            this.cboXSD.TabIndex = 1;
-            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
-            // 
-            // cboConnections
-            // 
-            this.cboConnections.FormattingEnabled = true;
-            this.cboConnections.Location = new System.Drawing.Point(3, 3);
-            this.cboConnections.Name = "cboConnections";
-            this.cboConnections.Size = new System.Drawing.Size(308, 28);
-            this.cboConnections.TabIndex = 33;
-            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
-            // 
-            // cboWWS2
-            // 
-            this.cboWWS2.FormattingEnabled = true;
-            this.cboWWS2.Location = new System.Drawing.Point(3, 3);
-            this.cboWWS2.Name = "cboWWS2";
-            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS2.TabIndex = 22;
-            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
             // 
             // WDMainForm
             // 

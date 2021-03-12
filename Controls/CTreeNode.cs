@@ -29,6 +29,7 @@ namespace ERPHelper
                 {
                     files = files.Concat(Directory.GetFiles(dir, filter.Trim())).ToArray();
                 }
+                files = files.Distinct().ToArray();
 
                 foreach (string file in files)
                 {

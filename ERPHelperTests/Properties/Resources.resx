@@ -129,6 +129,7 @@
     <value>&lt;?xml version="1.0"?&gt;
 &lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0"&gt;
+	&lt;xsl:output method="html" /&gt;
 	&lt;xsl:template match="/hello-world"&gt;
 		&lt;HTML&gt;
 			&lt;HEAD&gt;

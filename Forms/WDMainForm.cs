@@ -34,6 +34,7 @@ namespace ERPHelper
             try
             {
                 Cursor = Cursors.WaitCursor;
+                lblWarning.Text = "";
                 // Tool Tips
                 toolTip1.SetToolTip(lnkXFormInst, Properties.Resources.Instructions_XForm);
                 toolTip1.SetToolTip(lnkCallAPIInst, Properties.Resources.Instructions_CallAPI);

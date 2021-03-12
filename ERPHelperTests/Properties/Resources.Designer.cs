@@ -78,6 +78,7 @@ namespace ERPHelperTests.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
         ///                version=&quot;1.0&quot;&gt;
+        ///	&lt;xsl:output method=&quot;html&quot; /&gt;
         ///	&lt;xsl:template match=&quot;/hello-world&quot;&gt;
         ///		&lt;HTML&gt;
         ///			&lt;HEAD&gt;
@@ -97,8 +98,7 @@ namespace ERPHelperTests.Properties {
         ///				&lt;xsl:value-of select=&quot;.&quot;/&gt;
         ///			&lt;/I&gt;
         ///		&lt;/DIV&gt;
-        ///	&lt;/xsl:template&gt;
-        ///&lt;/xsl:stylesheet&gt;.
+        ///	&lt;/xsl:templat [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SaxonXFormXSLT {
             get {
