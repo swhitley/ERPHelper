@@ -266,7 +266,7 @@
             this.pnlTreeView.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.pnlTreeView.Name = "pnlTreeView";
             this.pnlTreeView.Padding = new System.Windows.Forms.Padding(15, 0, 0, 15);
-            this.pnlTreeView.Size = new System.Drawing.Size(424, 609);
+            this.pnlTreeView.Size = new System.Drawing.Size(425, 609);
             this.pnlTreeView.TabIndex = 12;
             // 
             // treeView1
@@ -276,7 +276,7 @@
             this.treeView1.Location = new System.Drawing.Point(15, 0);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(409, 594);
+            this.treeView1.Size = new System.Drawing.Size(410, 594);
             this.treeView1.TabIndex = 7;
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
@@ -467,6 +467,7 @@
             this.cboXSD.Size = new System.Drawing.Size(343, 28);
             this.cboXSD.TabIndex = 1;
             this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
+            this.cboXSD.TextUpdate += new System.EventHandler(this.cboXSD_TextUpdate);
             // 
             // lblVersion1
             // 

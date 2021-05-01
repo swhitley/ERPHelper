@@ -16,6 +16,6 @@ if %2 == "x64" (
 
 if exist %dir% powershell Compress-Archive -Path '%dir:"=%%file:"=%' -DestinationPath '%dir:"=%%zip:"=%' -Update
 
-if exist %dir% powershell "Get-FileHash '%dir:"=%%zip:"=%' | select -expandproperty Hash | select @{n='Hash';e={$_.toLower()}} | Out-File -FilePath '%dir:"=%sha256.txt'"
+if exist %dir% powershell "Get-FileHash '%dir:"=%%zip:"=%' | select -expandproperty Hash | select @{n='Hash';e={$_.toLower()}} | Out-File -FilePath '%dir:"=%%zip:"=%.sha256.txt'"
 
 :exit

@@ -19,41 +19,65 @@ namespace ERPHelper
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlBody);
-            XmlNode innerBody = xmlDoc.FirstChild.NextSibling;
-
-            if (innerBody.LocalName != "Envelope")
+ 
+            XmlNode saveBody = null;
+            XmlNode env = null;
+            XmlNode header = null;
+            XmlNode body = null;
+ 
+            // Does a Body element exist?
+            if (xmlDoc.SelectSingleNode("//*[local-name() = 'Body']") != null)
             {
-                xmlDoc = new XmlDocument();
-                XmlNode xmldocNode = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-                xmlDoc.AppendChild(xmldocNode);
-                XmlNode env = xmlDoc.CreateElement("xsd", "Envelope", nsXSD);
-                XmlNode header = xmlDoc.CreateElement("xsd", "Header", nsXSD);
-                XmlNode sec = xmlDoc.CreateElement("wsse", "Security", nsWSSE);
-                XmlNode ut = xmlDoc.CreateElement("wsse", "UsernameToken", nsWSSE);
-                XmlNode user = xmlDoc.CreateElement("wsse", "Username", nsWSSE);
-                XmlNode pass = xmlDoc.CreateElement("wsse", "Password", nsWSSE);
-                user.InnerText = username;
-                pass.InnerText = password;
-                XmlAttribute pType = xmlDoc.CreateAttribute("Type");
-                pType.Value = oasisPasswordUrl;
-                pass.Attributes.Append(pType);
-                XmlNode body = xmlDoc.CreateElement("env", "Body", nsXSD);
-                body.AppendChild(xmlDoc.ImportNode(innerBody, true));
-
-                ut.AppendChild(user);
-                ut.AppendChild(pass);
-                sec.AppendChild(ut);
-                header.AppendChild(sec);
-                env.AppendChild(header);
-                env.AppendChild(body);
-                xmlDoc.AppendChild(env);
+                saveBody = xmlDoc.SelectSingleNode("//*[local-name() = 'Body']").FirstChild;
             }
             else
             {
-                XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
-                ns.AddNamespace("xsd", nsXSD);
-                ns.AddNamespace("wsse", nsWSSE);
-               
+                // Assumes correct document that begins with "<?xml" declaration
+                saveBody = xmlDoc.FirstChild.NextSibling;
+            }
+
+            if(saveBody == null)
+            {
+                throw new Exception("The XML is not well-formed. Please ensure that an xml declaration (<?xml...) is included.");
+            }
+
+            // Rebuild XmlDoc
+            xmlDoc = new XmlDocument();
+            XmlNode xmldocNode = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDoc.AppendChild(xmldocNode);
+            XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
+            ns.AddNamespace("xsd", nsXSD);
+            ns.AddNamespace("wsse", nsWSSE);
+
+            // Envelope and Header
+            env = xmlDoc.CreateElement("xsd", "Envelope", nsXSD);             
+            header = xmlDoc.CreateElement("xsd", "Header", nsXSD);
+
+            // Credentials
+            XmlNode sec = xmlDoc.CreateElement("wsse", "Security", nsWSSE);
+            XmlNode ut = xmlDoc.CreateElement("wsse", "UsernameToken", nsWSSE);
+            XmlNode user = xmlDoc.CreateElement("wsse", "Username", nsWSSE);
+            XmlNode pass = xmlDoc.CreateElement("wsse", "Password", nsWSSE);
+            user.InnerText = username;
+            pass.InnerText = password;
+            XmlAttribute pType = xmlDoc.CreateAttribute("Type");
+            pType.Value = oasisPasswordUrl;
+            pass.Attributes.Append(pType);
+
+            // Body
+            body = xmlDoc.CreateElement("env", "Body", nsXSD);
+            body.AppendChild(xmlDoc.ImportNode(saveBody, true));
+
+            // Append Elements
+            ut.AppendChild(user);
+            ut.AppendChild(pass);
+            sec.AppendChild(ut);
+            header.AppendChild(sec);
+            env.AppendChild(header);
+            env.AppendChild(body);
+            xmlDoc.AppendChild(env);
+            
+            if(xmlDoc.SelectSingleNode(usernameTokenPath + "wsse:Username", ns) != null) {
                 xmlDoc.SelectSingleNode(usernameTokenPath + "wsse:Username", ns).InnerText = username;
                 xmlDoc.SelectSingleNode(usernameTokenPath + "wsse:Password", ns).InnerText = password;
             }

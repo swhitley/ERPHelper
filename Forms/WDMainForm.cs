@@ -119,6 +119,7 @@ namespace ERPHelper
                         TreeViewUpdate(txtWDStudioFolder.Text, txtFilter.Text);
                     }
                 }
+                pnlTreeView.Size = new Size(450, 609);
 
                 // Web Services
                 cboWWS1.SelectedIndex = cboWWS1.FindStringExact(Settings.Get(IniSection.State, cboWWS1.Name));
@@ -550,6 +551,7 @@ namespace ERPHelper
                     cboXSD.DataSource = new BindingSource(items, null);
                     cboXSD.DisplayMember = "Value";
                     cboXSD.ValueMember = "Key";
+                    cboXSD.SavedDatasource = null;
                 }
             }
             catch(Exception ex)
@@ -842,6 +844,19 @@ namespace ERPHelper
             {
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Latest Update Link Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cboXSD_TextUpdate(object sender, EventArgs e)
+        {
+            try
+            {
+                cboXSD.TextFilter(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Operation Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }
