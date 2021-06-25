@@ -159,6 +159,10 @@ namespace ERPHelper
                   tabControl.Controls.Remove(tabUpdate);
                 }
 
+                // Init as Soap
+                radSoap.Checked = true;
+                radGet.Checked = true;
+
                 // Initial Tab
                 string tab = Settings.Get(IniSection.State, tabControl.Name);
                 if (!String.IsNullOrEmpty(tab))
@@ -582,48 +586,26 @@ namespace ERPHelper
                 string username = txtUsername.Text + "@" + tenant;
                 string password = Crypto.Unprotect(lblPassword.Text);
                 string serviceURL = lnkApiUrl.Text;
-                string xmlData = editor.GetAllText();
+                string data = editor.GetAllText();
 
                 try
                 {
                     Cursor = Cursors.WaitCursor;
-                    using (var webClient = new WebClient())
-                    {
-                        webClient.Headers.Add("Content-Type", "text/xml; charset=utf-8");
-                        ServicePointManager.Expect100Continue = true;
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                        ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                        webClient.Credentials = new NetworkCredential(username, password);
-                        byte[] data = Encoding.UTF8.GetBytes(WDWebService.WrapSOAP(username, password, xmlData));
-                        byte[] rData = webClient.UploadData(lnkApiUrl.Text, data);
-
-                        notepad.FileNew();
-                        editor.SetXML(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + XDocument.Parse(Encoding.UTF8.GetString(rData)).ToString() + Environment.NewLine);
-                    }
-                }
-                catch (WebException webEx)
-                {
-                    String responseFromServer = webEx.Message.ToString() + Environment.NewLine;
-                    if (webEx.Response != null)
-                    {
-                        using (WebResponse response = webEx.Response)
-                        {
-                            Stream dataRs = response.GetResponseStream();
-                            using (StreamReader reader = new StreamReader(dataRs))
-                            {
-                                try
-                                {
-                                    responseFromServer += XDocument.Parse(reader.ReadToEnd());
-                                }
-                                catch
-                                {
-                                    // ignore exception
-                                }
-                            }
-                        }
-                    }
                     notepad.FileNew();
-                    editor.SetXML(responseFromServer);
+                    if (radSoap.Checked)
+                    {
+                        editor.SetXML(WDWebService.CallAPI(username, password, lnkApiUrl.Text, data));
+                    }
+                    else
+                    {
+                        string method = radGet.Text.ToUpper();
+                        foreach (RadioButton r in flwRestActions.Controls)
+                        {
+                            if (r.Checked)
+                                method = r.Text.ToUpper();
+                        }
+                        editor.SetXML(WDWebService.CallRest(txtUsername.Text, password, txtRest.Text, method, radRaaS.Checked, data));
+                    }
                 }
                 finally
                 {
@@ -857,6 +839,42 @@ namespace ERPHelper
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Operation Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void radRaaS_CheckedChanged(object sender, EventArgs e)
+        {
+            cboWWS2.Visible = false;
+            txtVersion2.Visible = false;
+            lblService.Text = "Url";
+            lblVersion2.Visible = false;
+            lnkApiUrl.Visible = false;
+            txtRest.Visible = true;
+            flwRestActions.Visible = false;
+            lnkCallAPIInst.Visible = false;
+            lblInstructions2.Visible = false;
+            grpActions.Refresh();
+
+        }
+
+        private void radSoap_CheckedChanged(object sender, EventArgs e)
+        {
+            cboWWS2.Visible = true;
+            txtVersion2.Visible = true;
+            lblService.Text = "Service";
+            lblVersion2.Visible = true;
+            lnkApiUrl.Visible = true;
+            txtRest.Visible = false;
+            flwRestActions.Visible = false;
+            lnkCallAPIInst.Visible = true;
+            lblInstructions2.Visible = true;
+            grpActions.Refresh();
+
+        }
+
+        private void radRestNoAuth_CheckedChanged(object sender, EventArgs e)
+        {
+            radRaaS_CheckedChanged(sender, e);
+            flwRestActions.Visible = false;
         }
     }
 }

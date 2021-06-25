@@ -41,7 +41,6 @@
             this.lblWarning = new System.Windows.Forms.Label();
             this.tabWDStudioFiles = new System.Windows.Forms.TabPage();
             this.pnlTreeView = new System.Windows.Forms.Panel();
-            this.treeView1 = new ERPHelper.CTreeView();
             this.pnlFiles = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -55,10 +54,8 @@
             this.tabWebSvcs = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblWWS = new System.Windows.Forms.Label();
-            this.cboWWS1 = new ERPHelper.CComboBox();
             this.lblOperation = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboXSD = new ERPHelper.CComboBox();
             this.lblVersion1 = new System.Windows.Forms.Label();
             this.txtVersion1 = new System.Windows.Forms.TextBox();
             this.btnGenXML = new System.Windows.Forms.Button();
@@ -66,6 +63,27 @@
             this.lnkWWS = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
             this.tabAPICalls = new System.Windows.Forms.TabPage();
+            this.grpActions = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel15 = new System.Windows.Forms.FlowLayoutPanel();
+            this.radSoap = new System.Windows.Forms.RadioButton();
+            this.radRaaS = new System.Windows.Forms.RadioButton();
+            this.radRestNoAuth = new System.Windows.Forms.RadioButton();
+            this.lblService = new System.Windows.Forms.Label();
+            this.txtRest = new System.Windows.Forms.TextBox();
+            this.flwRestActions = new System.Windows.Forms.FlowLayoutPanel();
+            this.radGet = new System.Windows.Forms.RadioButton();
+            this.radPost = new System.Windows.Forms.RadioButton();
+            this.radPut = new System.Windows.Forms.RadioButton();
+            this.radDelete = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblVersion2 = new System.Windows.Forms.Label();
+            this.txtVersion2 = new System.Windows.Forms.TextBox();
+            this.lnkApiUrl = new System.Windows.Forms.LinkLabel();
+            this.flowLayoutPanel12 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnCallAPI = new System.Windows.Forms.Button();
+            this.lblInstructions2 = new System.Windows.Forms.Label();
+            this.lnkCallAPIInst = new System.Windows.Forms.LinkLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel9 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSampleAPIRequest = new System.Windows.Forms.Button();
@@ -76,7 +94,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboConnections = new ERPHelper.CComboBox();
             this.btnConns = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label12 = new System.Windows.Forms.Label();
@@ -84,17 +101,6 @@
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.label13 = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboWWS2 = new ERPHelper.CComboBox();
-            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtVersion2 = new System.Windows.Forms.TextBox();
-            this.lnkApiUrl = new System.Windows.Forms.LinkLabel();
-            this.flowLayoutPanel12 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnCallAPI = new System.Windows.Forms.Button();
-            this.lblInstructions2 = new System.Windows.Forms.Label();
-            this.lnkCallAPIInst = new System.Windows.Forms.LinkLabel();
             this.lblPassword = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.tabUpdate = new System.Windows.Forms.TabPage();
@@ -106,6 +112,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.treeView1 = new ERPHelper.CTreeView();
+            this.cboWWS1 = new ERPHelper.CComboBox();
+            this.cboXSD = new ERPHelper.CComboBox();
+            this.cboWWS2 = new ERPHelper.CComboBox();
+            this.cboConnections = new ERPHelper.CComboBox();
             this.tabControl.SuspendLayout();
             this.tabXForm.SuspendLayout();
             this.flowLayoutPanel13.SuspendLayout();
@@ -119,6 +130,12 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabAPICalls.SuspendLayout();
+            this.grpActions.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel15.SuspendLayout();
+            this.flwRestActions.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
+            this.flowLayoutPanel12.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.flowLayoutPanel9.SuspendLayout();
             this.flowLayoutPanel14.SuspendLayout();
@@ -127,10 +144,6 @@
             this.flowLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.flowLayoutPanel4.SuspendLayout();
-            this.flowLayoutPanel5.SuspendLayout();
-            this.flowLayoutPanel12.SuspendLayout();
             this.tabUpdate.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -266,19 +279,8 @@
             this.pnlTreeView.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.pnlTreeView.Name = "pnlTreeView";
             this.pnlTreeView.Padding = new System.Windows.Forms.Padding(15, 0, 0, 15);
-            this.pnlTreeView.Size = new System.Drawing.Size(425, 609);
+            this.pnlTreeView.Size = new System.Drawing.Size(217, 609);
             this.pnlTreeView.TabIndex = 12;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.treeView1.Location = new System.Drawing.Point(15, 0);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(410, 594);
-            this.treeView1.TabIndex = 7;
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // pnlFiles
             // 
@@ -430,15 +432,6 @@
             this.lblWWS.Text = "Service";
             this.lblWWS.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // cboWWS1
-            // 
-            this.cboWWS1.FormattingEnabled = true;
-            this.cboWWS1.Location = new System.Drawing.Point(6, 26);
-            this.cboWWS1.Name = "cboWWS1";
-            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS1.TabIndex = 0;
-            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
-            // 
             // lblOperation
             // 
             this.lblOperation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -458,16 +451,6 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(387, 40);
             this.flowLayoutPanel2.TabIndex = 20;
-            // 
-            // cboXSD
-            // 
-            this.cboXSD.FormattingEnabled = true;
-            this.cboXSD.Location = new System.Drawing.Point(3, 3);
-            this.cboXSD.Name = "cboXSD";
-            this.cboXSD.Size = new System.Drawing.Size(343, 28);
-            this.cboXSD.TabIndex = 1;
-            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
-            this.cboXSD.TextUpdate += new System.EventHandler(this.cboXSD_TextUpdate);
             // 
             // lblVersion1
             // 
@@ -537,9 +520,9 @@
             // 
             this.tabAPICalls.AutoScroll = true;
             this.tabAPICalls.BackColor = System.Drawing.SystemColors.Info;
+            this.tabAPICalls.Controls.Add(this.grpActions);
             this.tabAPICalls.Controls.Add(this.groupBox3);
             this.tabAPICalls.Controls.Add(this.groupBox2);
-            this.tabAPICalls.Controls.Add(this.groupBox1);
             this.tabAPICalls.Controls.Add(this.lblPassword);
             this.tabAPICalls.Controls.Add(this.label9);
             this.tabAPICalls.Location = new System.Drawing.Point(114, 4);
@@ -548,10 +531,245 @@
             this.tabAPICalls.TabIndex = 3;
             this.tabAPICalls.Text = "API Calls";
             // 
+            // grpActions
+            // 
+            this.grpActions.Controls.Add(this.flowLayoutPanel4);
+            this.grpActions.Location = new System.Drawing.Point(10, 245);
+            this.grpActions.Name = "grpActions";
+            this.grpActions.Size = new System.Drawing.Size(386, 304);
+            this.grpActions.TabIndex = 20;
+            this.grpActions.TabStop = false;
+            this.grpActions.Text = "Actions";
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.AutoSize = true;
+            this.flowLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel4.Controls.Add(this.flowLayoutPanel15);
+            this.flowLayoutPanel4.Controls.Add(this.lblService);
+            this.flowLayoutPanel4.Controls.Add(this.txtRest);
+            this.flowLayoutPanel4.Controls.Add(this.flwRestActions);
+            this.flowLayoutPanel4.Controls.Add(this.cboWWS2);
+            this.flowLayoutPanel4.Controls.Add(this.flowLayoutPanel5);
+            this.flowLayoutPanel4.Controls.Add(this.lnkApiUrl);
+            this.flowLayoutPanel4.Controls.Add(this.flowLayoutPanel12);
+            this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(6, 25);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(356, 383);
+            this.flowLayoutPanel4.TabIndex = 22;
+            this.flowLayoutPanel4.WrapContents = false;
+            // 
+            // flowLayoutPanel15
+            // 
+            this.flowLayoutPanel15.Controls.Add(this.radSoap);
+            this.flowLayoutPanel15.Controls.Add(this.radRaaS);
+            this.flowLayoutPanel15.Controls.Add(this.radRestNoAuth);
+            this.flowLayoutPanel15.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel15.Name = "flowLayoutPanel15";
+            this.flowLayoutPanel15.Size = new System.Drawing.Size(338, 35);
+            this.flowLayoutPanel15.TabIndex = 31;
+            // 
+            // radSoap
+            // 
+            this.radSoap.AutoSize = true;
+            this.radSoap.Location = new System.Drawing.Point(3, 3);
+            this.radSoap.Name = "radSoap";
+            this.radSoap.Size = new System.Drawing.Size(72, 24);
+            this.radSoap.TabIndex = 29;
+            this.radSoap.TabStop = true;
+            this.radSoap.Text = "Soap";
+            this.radSoap.UseVisualStyleBackColor = true;
+            this.radSoap.CheckedChanged += new System.EventHandler(this.radSoap_CheckedChanged);
+            // 
+            // radRaaS
+            // 
+            this.radRaaS.AutoSize = true;
+            this.radRaaS.Location = new System.Drawing.Point(81, 3);
+            this.radRaaS.Name = "radRaaS";
+            this.radRaaS.Size = new System.Drawing.Size(75, 24);
+            this.radRaaS.TabIndex = 30;
+            this.radRaaS.TabStop = true;
+            this.radRaaS.Text = "RaaS";
+            this.radRaaS.UseVisualStyleBackColor = true;
+            this.radRaaS.CheckedChanged += new System.EventHandler(this.radRaaS_CheckedChanged);
+            // 
+            // radRestNoAuth
+            // 
+            this.radRestNoAuth.AutoSize = true;
+            this.radRestNoAuth.Location = new System.Drawing.Point(162, 3);
+            this.radRestNoAuth.Name = "radRestNoAuth";
+            this.radRestNoAuth.Size = new System.Drawing.Size(166, 24);
+            this.radRestNoAuth.TabIndex = 31;
+            this.radRestNoAuth.TabStop = true;
+            this.radRestNoAuth.Text = "Http Get (no Auth)";
+            this.radRestNoAuth.UseVisualStyleBackColor = true;
+            this.radRestNoAuth.CheckedChanged += new System.EventHandler(this.radRestNoAuth_CheckedChanged);
+            // 
+            // lblService
+            // 
+            this.lblService.AutoSize = true;
+            this.lblService.Location = new System.Drawing.Point(3, 51);
+            this.lblService.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+            this.lblService.Name = "lblService";
+            this.lblService.Size = new System.Drawing.Size(61, 20);
+            this.lblService.TabIndex = 32;
+            this.lblService.Text = "Service";
+            // 
+            // txtRest
+            // 
+            this.txtRest.Location = new System.Drawing.Point(3, 74);
+            this.txtRest.Multiline = true;
+            this.txtRest.Name = "txtRest";
+            this.txtRest.Size = new System.Drawing.Size(343, 75);
+            this.txtRest.TabIndex = 33;
+            this.txtRest.Visible = false;
+            // 
+            // flwRestActions
+            // 
+            this.flwRestActions.Controls.Add(this.radGet);
+            this.flwRestActions.Controls.Add(this.radPost);
+            this.flwRestActions.Controls.Add(this.radPut);
+            this.flwRestActions.Controls.Add(this.radDelete);
+            this.flwRestActions.Location = new System.Drawing.Point(3, 155);
+            this.flwRestActions.Name = "flwRestActions";
+            this.flwRestActions.Size = new System.Drawing.Size(349, 37);
+            this.flwRestActions.TabIndex = 34;
+            // 
+            // radGet
+            // 
+            this.radGet.AutoSize = true;
+            this.radGet.Location = new System.Drawing.Point(3, 3);
+            this.radGet.Name = "radGet";
+            this.radGet.Size = new System.Drawing.Size(61, 24);
+            this.radGet.TabIndex = 0;
+            this.radGet.TabStop = true;
+            this.radGet.Text = "Get";
+            this.radGet.UseVisualStyleBackColor = true;
+            // 
+            // radPost
+            // 
+            this.radPost.AutoSize = true;
+            this.radPost.Location = new System.Drawing.Point(70, 3);
+            this.radPost.Name = "radPost";
+            this.radPost.Size = new System.Drawing.Size(66, 24);
+            this.radPost.TabIndex = 2;
+            this.radPost.TabStop = true;
+            this.radPost.Text = "Post";
+            this.radPost.UseVisualStyleBackColor = true;
+            // 
+            // radPut
+            // 
+            this.radPut.AutoSize = true;
+            this.radPut.Location = new System.Drawing.Point(142, 3);
+            this.radPut.Name = "radPut";
+            this.radPut.Size = new System.Drawing.Size(58, 24);
+            this.radPut.TabIndex = 1;
+            this.radPut.TabStop = true;
+            this.radPut.Text = "Put";
+            this.radPut.UseVisualStyleBackColor = true;
+            // 
+            // radDelete
+            // 
+            this.radDelete.AutoSize = true;
+            this.radDelete.Location = new System.Drawing.Point(206, 3);
+            this.radDelete.Name = "radDelete";
+            this.radDelete.Size = new System.Drawing.Size(81, 24);
+            this.radDelete.TabIndex = 3;
+            this.radDelete.TabStop = true;
+            this.radDelete.Text = "Delete";
+            this.radDelete.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Controls.Add(this.lblVersion2);
+            this.flowLayoutPanel5.Controls.Add(this.txtVersion2);
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 232);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(200, 38);
+            this.flowLayoutPanel5.TabIndex = 25;
+            this.flowLayoutPanel5.WrapContents = false;
+            // 
+            // lblVersion2
+            // 
+            this.lblVersion2.AutoSize = true;
+            this.lblVersion2.Location = new System.Drawing.Point(3, 3);
+            this.lblVersion2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.lblVersion2.Name = "lblVersion2";
+            this.lblVersion2.Size = new System.Drawing.Size(63, 20);
+            this.lblVersion2.TabIndex = 26;
+            this.lblVersion2.Text = "Version";
+            // 
+            // txtVersion2
+            // 
+            this.txtVersion2.Location = new System.Drawing.Point(72, 3);
+            this.txtVersion2.Name = "txtVersion2";
+            this.txtVersion2.Size = new System.Drawing.Size(79, 26);
+            this.txtVersion2.TabIndex = 24;
+            this.txtVersion2.TextChanged += new System.EventHandler(this.txtVersion2_TextChanged);
+            // 
+            // lnkApiUrl
+            // 
+            this.lnkApiUrl.AutoEllipsis = true;
+            this.lnkApiUrl.AutoSize = true;
+            this.lnkApiUrl.Location = new System.Drawing.Point(3, 273);
+            this.lnkApiUrl.MaximumSize = new System.Drawing.Size(338, 49);
+            this.lnkApiUrl.MinimumSize = new System.Drawing.Size(338, 49);
+            this.lnkApiUrl.Name = "lnkApiUrl";
+            this.lnkApiUrl.Size = new System.Drawing.Size(338, 49);
+            this.lnkApiUrl.TabIndex = 27;
+            this.lnkApiUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkURL_LinkClicked);
+            // 
+            // flowLayoutPanel12
+            // 
+            this.flowLayoutPanel12.Controls.Add(this.btnCallAPI);
+            this.flowLayoutPanel12.Controls.Add(this.lblInstructions2);
+            this.flowLayoutPanel12.Controls.Add(this.lnkCallAPIInst);
+            this.flowLayoutPanel12.Location = new System.Drawing.Point(4, 327);
+            this.flowLayoutPanel12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.flowLayoutPanel12.Name = "flowLayoutPanel12";
+            this.flowLayoutPanel12.Size = new System.Drawing.Size(348, 51);
+            this.flowLayoutPanel12.TabIndex = 28;
+            this.flowLayoutPanel12.WrapContents = false;
+            // 
+            // btnCallAPI
+            // 
+            this.btnCallAPI.Location = new System.Drawing.Point(3, 3);
+            this.btnCallAPI.Name = "btnCallAPI";
+            this.btnCallAPI.Size = new System.Drawing.Size(146, 38);
+            this.btnCallAPI.TabIndex = 9;
+            this.btnCallAPI.Text = "Call API";
+            this.btnCallAPI.UseVisualStyleBackColor = true;
+            this.btnCallAPI.Click += new System.EventHandler(this.btnCallAPI_Click);
+            // 
+            // lblInstructions2
+            // 
+            this.lblInstructions2.AutoSize = true;
+            this.lblInstructions2.Location = new System.Drawing.Point(190, 11);
+            this.lblInstructions2.Margin = new System.Windows.Forms.Padding(38, 11, 0, 0);
+            this.lblInstructions2.Name = "lblInstructions2";
+            this.lblInstructions2.Size = new System.Drawing.Size(92, 20);
+            this.lblInstructions2.TabIndex = 24;
+            this.lblInstructions2.Text = "Instructions";
+            this.lblInstructions2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lnkCallAPIInst
+            // 
+            this.lnkCallAPIInst.AutoSize = true;
+            this.lnkCallAPIInst.Location = new System.Drawing.Point(282, 11);
+            this.lnkCallAPIInst.Margin = new System.Windows.Forms.Padding(0, 11, 3, 0);
+            this.lnkCallAPIInst.Name = "lnkCallAPIInst";
+            this.lnkCallAPIInst.Size = new System.Drawing.Size(26, 20);
+            this.lnkCallAPIInst.TabIndex = 23;
+            this.lnkCallAPIInst.TabStop = true;
+            this.lnkCallAPIInst.Text = "[?]";
+            this.lnkCallAPIInst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lnkCallAPIInst.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCallAPIInst_LinkClicked);
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel9);
-            this.groupBox3.Location = new System.Drawing.Point(10, 497);
+            this.groupBox3.Location = new System.Drawing.Point(10, 579);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -631,7 +849,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.flowLayoutPanel7);
-            this.groupBox2.Location = new System.Drawing.Point(10, 60);
+            this.groupBox2.Location = new System.Drawing.Point(10, 52);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(386, 168);
             this.groupBox2.TabIndex = 21;
@@ -657,15 +875,6 @@
             this.flowLayoutPanel8.Size = new System.Drawing.Size(366, 42);
             this.flowLayoutPanel8.TabIndex = 35;
             this.flowLayoutPanel8.WrapContents = false;
-            // 
-            // cboConnections
-            // 
-            this.cboConnections.FormattingEnabled = true;
-            this.cboConnections.Location = new System.Drawing.Point(3, 3);
-            this.cboConnections.Name = "cboConnections";
-            this.cboConnections.Size = new System.Drawing.Size(308, 28);
-            this.cboConnections.TabIndex = 33;
-            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
             // 
             // btnConns
             // 
@@ -739,129 +948,10 @@
             this.txtUsername.Size = new System.Drawing.Size(250, 26);
             this.txtUsername.TabIndex = 1;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.flowLayoutPanel4);
-            this.groupBox1.Location = new System.Drawing.Point(10, 245);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(386, 232);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Service";
-            // 
-            // flowLayoutPanel4
-            // 
-            this.flowLayoutPanel4.AutoSize = true;
-            this.flowLayoutPanel4.Controls.Add(this.cboWWS2);
-            this.flowLayoutPanel4.Controls.Add(this.flowLayoutPanel5);
-            this.flowLayoutPanel4.Controls.Add(this.lnkApiUrl);
-            this.flowLayoutPanel4.Controls.Add(this.flowLayoutPanel12);
-            this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(6, 25);
-            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(369, 203);
-            this.flowLayoutPanel4.TabIndex = 22;
-            this.flowLayoutPanel4.WrapContents = false;
-            // 
-            // cboWWS2
-            // 
-            this.cboWWS2.FormattingEnabled = true;
-            this.cboWWS2.Location = new System.Drawing.Point(3, 3);
-            this.cboWWS2.Name = "cboWWS2";
-            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
-            this.cboWWS2.TabIndex = 22;
-            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
-            // 
-            // flowLayoutPanel5
-            // 
-            this.flowLayoutPanel5.Controls.Add(this.label11);
-            this.flowLayoutPanel5.Controls.Add(this.txtVersion2);
-            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 37);
-            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(200, 38);
-            this.flowLayoutPanel5.TabIndex = 25;
-            this.flowLayoutPanel5.WrapContents = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 3);
-            this.label11.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(63, 20);
-            this.label11.TabIndex = 26;
-            this.label11.Text = "Version";
-            // 
-            // txtVersion2
-            // 
-            this.txtVersion2.Location = new System.Drawing.Point(72, 3);
-            this.txtVersion2.Name = "txtVersion2";
-            this.txtVersion2.Size = new System.Drawing.Size(79, 26);
-            this.txtVersion2.TabIndex = 24;
-            this.txtVersion2.TextChanged += new System.EventHandler(this.txtVersion2_TextChanged);
-            // 
-            // lnkApiUrl
-            // 
-            this.lnkApiUrl.AutoEllipsis = true;
-            this.lnkApiUrl.AutoSize = true;
-            this.lnkApiUrl.Location = new System.Drawing.Point(3, 78);
-            this.lnkApiUrl.MaximumSize = new System.Drawing.Size(338, 49);
-            this.lnkApiUrl.MinimumSize = new System.Drawing.Size(338, 49);
-            this.lnkApiUrl.Name = "lnkApiUrl";
-            this.lnkApiUrl.Size = new System.Drawing.Size(338, 49);
-            this.lnkApiUrl.TabIndex = 27;
-            this.lnkApiUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkURL_LinkClicked);
-            // 
-            // flowLayoutPanel12
-            // 
-            this.flowLayoutPanel12.Controls.Add(this.btnCallAPI);
-            this.flowLayoutPanel12.Controls.Add(this.lblInstructions2);
-            this.flowLayoutPanel12.Controls.Add(this.lnkCallAPIInst);
-            this.flowLayoutPanel12.Location = new System.Drawing.Point(4, 132);
-            this.flowLayoutPanel12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.flowLayoutPanel12.Name = "flowLayoutPanel12";
-            this.flowLayoutPanel12.Size = new System.Drawing.Size(348, 51);
-            this.flowLayoutPanel12.TabIndex = 28;
-            this.flowLayoutPanel12.WrapContents = false;
-            // 
-            // btnCallAPI
-            // 
-            this.btnCallAPI.Location = new System.Drawing.Point(3, 3);
-            this.btnCallAPI.Name = "btnCallAPI";
-            this.btnCallAPI.Size = new System.Drawing.Size(146, 38);
-            this.btnCallAPI.TabIndex = 9;
-            this.btnCallAPI.Text = "Call API";
-            this.btnCallAPI.UseVisualStyleBackColor = true;
-            this.btnCallAPI.Click += new System.EventHandler(this.btnCallAPI_Click);
-            // 
-            // lblInstructions2
-            // 
-            this.lblInstructions2.AutoSize = true;
-            this.lblInstructions2.Location = new System.Drawing.Point(190, 11);
-            this.lblInstructions2.Margin = new System.Windows.Forms.Padding(38, 11, 0, 0);
-            this.lblInstructions2.Name = "lblInstructions2";
-            this.lblInstructions2.Size = new System.Drawing.Size(92, 20);
-            this.lblInstructions2.TabIndex = 24;
-            this.lblInstructions2.Text = "Instructions";
-            this.lblInstructions2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lnkCallAPIInst
-            // 
-            this.lnkCallAPIInst.AutoSize = true;
-            this.lnkCallAPIInst.Location = new System.Drawing.Point(282, 11);
-            this.lnkCallAPIInst.Margin = new System.Windows.Forms.Padding(0, 11, 3, 0);
-            this.lnkCallAPIInst.Name = "lnkCallAPIInst";
-            this.lnkCallAPIInst.Size = new System.Drawing.Size(26, 20);
-            this.lnkCallAPIInst.TabIndex = 23;
-            this.lnkCallAPIInst.TabStop = true;
-            this.lnkCallAPIInst.Text = "[?]";
-            this.lnkCallAPIInst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lnkCallAPIInst.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCallAPIInst_LinkClicked);
-            // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(106, 1786);
+            this.lblPassword.Location = new System.Drawing.Point(106, 2725);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(0, 20);
             this.lblPassword.TabIndex = 8;
@@ -961,6 +1051,54 @@
             this.toolTip1.IsBalloon = true;
             this.toolTip1.ReshowDelay = 100;
             // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.treeView1.Location = new System.Drawing.Point(15, 0);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(202, 594);
+            this.treeView1.TabIndex = 7;
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            // 
+            // cboWWS1
+            // 
+            this.cboWWS1.FormattingEnabled = true;
+            this.cboWWS1.Location = new System.Drawing.Point(6, 26);
+            this.cboWWS1.Name = "cboWWS1";
+            this.cboWWS1.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS1.TabIndex = 0;
+            this.cboWWS1.SelectedIndexChanged += new System.EventHandler(this.cboWWS1_SelectedIndexChanged);
+            // 
+            // cboXSD
+            // 
+            this.cboXSD.FormattingEnabled = true;
+            this.cboXSD.Location = new System.Drawing.Point(3, 3);
+            this.cboXSD.Name = "cboXSD";
+            this.cboXSD.Size = new System.Drawing.Size(343, 28);
+            this.cboXSD.TabIndex = 1;
+            this.cboXSD.SelectedIndexChanged += new System.EventHandler(this.cboXSD_SelectedIndexChanged);
+            this.cboXSD.TextUpdate += new System.EventHandler(this.cboXSD_TextUpdate);
+            // 
+            // cboWWS2
+            // 
+            this.cboWWS2.FormattingEnabled = true;
+            this.cboWWS2.Location = new System.Drawing.Point(3, 198);
+            this.cboWWS2.Name = "cboWWS2";
+            this.cboWWS2.Size = new System.Drawing.Size(343, 28);
+            this.cboWWS2.TabIndex = 22;
+            this.cboWWS2.SelectedIndexChanged += new System.EventHandler(this.cboWWS2_SelectedIndexChanged);
+            // 
+            // cboConnections
+            // 
+            this.cboConnections.FormattingEnabled = true;
+            this.cboConnections.Location = new System.Drawing.Point(3, 3);
+            this.cboConnections.Name = "cboConnections";
+            this.cboConnections.Size = new System.Drawing.Size(308, 28);
+            this.cboConnections.TabIndex = 33;
+            this.cboConnections.SelectedIndexChanged += new System.EventHandler(this.cboConnections_SelectedIndexChanged);
+            // 
             // WDMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -995,6 +1133,18 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.tabAPICalls.ResumeLayout(false);
             this.tabAPICalls.PerformLayout();
+            this.grpActions.ResumeLayout(false);
+            this.grpActions.PerformLayout();
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel15.ResumeLayout(false);
+            this.flowLayoutPanel15.PerformLayout();
+            this.flwRestActions.ResumeLayout(false);
+            this.flwRestActions.PerformLayout();
+            this.flowLayoutPanel5.ResumeLayout(false);
+            this.flowLayoutPanel5.PerformLayout();
+            this.flowLayoutPanel12.ResumeLayout(false);
+            this.flowLayoutPanel12.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.flowLayoutPanel9.ResumeLayout(false);
             this.flowLayoutPanel14.ResumeLayout(false);
@@ -1006,14 +1156,6 @@
             this.flowLayoutPanel3.PerformLayout();
             this.flowLayoutPanel6.ResumeLayout(false);
             this.flowLayoutPanel6.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.flowLayoutPanel4.ResumeLayout(false);
-            this.flowLayoutPanel4.PerformLayout();
-            this.flowLayoutPanel5.ResumeLayout(false);
-            this.flowLayoutPanel5.PerformLayout();
-            this.flowLayoutPanel12.ResumeLayout(false);
-            this.flowLayoutPanel12.PerformLayout();
             this.tabUpdate.ResumeLayout(false);
             this.tabUpdate.PerformLayout();
             this.ResumeLayout(false);
@@ -1040,11 +1182,11 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private CComboBox cboXSD;
         private System.Windows.Forms.Button btnGenXML;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpActions;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private CComboBox cboWWS2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblVersion2;
         private System.Windows.Forms.TextBox txtVersion2;
         private System.Windows.Forms.LinkLabel lnkApiUrl;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1096,5 +1238,16 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtVersionDescr;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel15;
+        private System.Windows.Forms.RadioButton radRaaS;
+        private System.Windows.Forms.RadioButton radSoap;
+        private System.Windows.Forms.Label lblService;
+        private System.Windows.Forms.TextBox txtRest;
+        private System.Windows.Forms.FlowLayoutPanel flwRestActions;
+        private System.Windows.Forms.RadioButton radGet;
+        private System.Windows.Forms.RadioButton radPost;
+        private System.Windows.Forms.RadioButton radPut;
+        private System.Windows.Forms.RadioButton radDelete;
+        private System.Windows.Forms.RadioButton radRestNoAuth;
     }
 }

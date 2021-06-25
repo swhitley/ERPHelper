@@ -5,6 +5,8 @@ using System.Xml.Linq;
 using System.Net;
 using HtmlAgilityPack;
 using System.Text.Json;
+using System.Text;
+using System.IO;
 
 namespace ERPHelper
 {
@@ -118,7 +120,6 @@ namespace ERPHelper
         {
             string result = "";
 
-            // Get Service Gateway 
             using (var webClient = new WebClient())
             {
                 ServicePointManager.Expect100Continue = true;
@@ -135,5 +136,70 @@ namespace ERPHelper
         {
             return Settings.Get(IniSection.Connection, conn, IniKey.URL) + service + "/" + version;
         }
+
+        public static string CallAPI(string username, string password, string url, string xmlData)
+        {
+            try
+            {
+                using (var webClient = new WebClient())
+                {
+                    webClient.Headers.Add("Content-Type", "text/xml; charset=utf-8");
+                    ServicePointManager.Expect100Continue = true;
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    webClient.Credentials = new NetworkCredential(username, password);
+                    byte[] data = Encoding.UTF8.GetBytes(WDWebService.WrapSOAP(username, password, xmlData));
+                    byte[] rData = webClient.UploadData(url, data);
+
+                    return new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + XDocument.Parse(Encoding.UTF8.GetString(rData)).ToString() + Environment.NewLine;
+                }
+            }
+            catch (WebException webEx)
+            {
+                String responseFromServer = webEx.Message.ToString() + Environment.NewLine;
+                if (webEx.Response != null)
+                {
+                    using (WebResponse response = webEx.Response)
+                    {
+                        Stream dataRs = response.GetResponseStream();
+                        using (StreamReader reader = new StreamReader(dataRs))
+                        {
+                            try
+                            {
+                                responseFromServer += XDocument.Parse(reader.ReadToEnd());
+                            }
+                            catch
+                            {
+                                // ignore exception
+                            }
+                        }
+                    }
+                }
+                return responseFromServer;
+            }
+        }
+        public static string CallRest(string username, string password, string url, string method, bool auth, string data = "")
+        {
+            using (var webClient = new WebClient())
+            {
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                if (auth)
+                {
+                    webClient.Credentials = new NetworkCredential(username, password);
+                }
+                if(method != WebRequestMethods.Http.Get.ToUpper())
+                { 
+                    if(method == "DELETE")
+                    {
+                        data = String.Empty;
+                    }
+                    return webClient.UploadString(url, method, data);
+                }
+                return webClient.DownloadString(url);
+            }
+        }
+
     }
 }
