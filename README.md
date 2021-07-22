@@ -26,6 +26,7 @@ https://github.com/swhitley/ERPHelper/releases/latest
 - Workday Studio quick file access
 - Web Service sample SOAP request generator
 - Workday API Connector
+- Get, modify, and Put Integration Systems.
 
 ### How to use
 Open Notepad++, select **Plugins / ERP Helper**.
