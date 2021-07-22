@@ -4,7 +4,7 @@
 
 **ERP Helper** is a [Notepad++](https://notepad-plus-plus.org/) plugin with a set of utilities for developing ERP integrations. It includes XSL transformation and Workday® API SOAP calls.
 
-![image](https://user-images.githubusercontent.com/413552/105565823-a161c880-5cdd-11eb-888a-fc497f44b1bc.png)
+![image](https://user-images.githubusercontent.com/413552/126582838-9852d67d-d3db-491c-8695-e1d9eb7b0940.png)
 
 
 ## How to install
