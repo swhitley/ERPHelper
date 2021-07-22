@@ -148,7 +148,7 @@ namespace ERPHelper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 1. Open the XML and XSLT documents.
         ///2. Position the tabs as shown (XML, XSLT).
-        ///3. Select the XML document tab.
+        ///3. Select the XML or XSLT document tab.
         ///4. Click the &apos;Transform&apos; button.
         ///
         ///- Tab order is important.
@@ -157,6 +157,22 @@ namespace ERPHelper.Properties {
         internal static string Instructions_XForm {
             get {
                 return ResourceManager.GetString("Instructions.XForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF - 8&quot;?&gt;
+        ///&lt;bsvc:Get_Integration_Systems_Request bsvc:version=&quot;v36.0&quot; xmlns:bsvc=&quot;urn:com.workday/bsvc&quot;&gt;
+        ///	&lt;bsvc:Request_References&gt;
+        ///		&lt;bsvc:Integration_System_Reference&gt;
+        ///			&lt;bsvc:ID bsvc:type=&quot;Integration_System_ID&quot;&gt;{Integration_System_ID}&lt;/bsvc:ID&gt;
+        ///		&lt;/bsvc:Integration_System_Reference&gt;
+        ///	&lt;/bsvc:Request_References&gt;
+        ///&lt;/bsvc:Get_Integration_Systems_Request&gt;.
+        /// </summary>
+        internal static string IntSys_Get {
+            get {
+                return ResourceManager.GetString("IntSys.Get", resourceCulture);
             }
         }
         

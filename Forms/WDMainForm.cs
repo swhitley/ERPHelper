@@ -163,6 +163,11 @@ namespace ERPHelper
                 radSoap.Checked = true;
                 radGet.Checked = true;
 
+                // Init IntSyst Tab
+                txtConnection.Text = cboConnections.SelectedItem.ToString();
+                txtTenant2.Text = txtTenant.Text;
+                txtUsername2.Text = txtUsername.Text;
+
                 // Initial Tab
                 string tab = Settings.Get(IniSection.State, tabControl.Name);
                 if (!String.IsNullOrEmpty(tab))
@@ -266,6 +271,7 @@ namespace ERPHelper
             bool foundXML = false;
             bool foundXSLT = false;
             bool foundXForm = false;
+            bool onXSLT = false;
 
             try
             {
@@ -286,7 +292,13 @@ namespace ERPHelper
                 // Get XML text
                 xmlFileName = notepad.GetCurrentFilePath();
                 xmlData = editor.GetAllText();
-                
+
+                // Identify the current document as XSLT.
+                if(xmlData.IndexOf("</xsl:stylesheet>") > 0)
+                {
+                    onXSLT = true;
+                }
+
 
                 // **************************************************
                 // Find the XSLT document
@@ -294,10 +306,33 @@ namespace ERPHelper
                 // Count of opened files
                 int fileCnt = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, 0, 0);
 
+                // If viewing XSLT, select the XML file before it.
+                if (onXSLT)
+                {
+                    using (ClikeStringArray cStrArray = new ClikeStringArray(fileCnt, Win32.MAX_PATH))
+                    {
+                        if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, cStrArray.NativePointer, fileCnt) != IntPtr.Zero)
+                        {
+                            string prevFile = "";
+                            foreach (string file in cStrArray.ManagedStringsUnicode)
+                            {
+                                if (file == xmlFileName)
+                                {
+                                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, prevFile);
+                                    xmlFileName = notepad.GetCurrentFilePath();
+                                    xmlData = editor.GetAllText();
+                                    break;
+                                }                                
+                                prevFile = file;
+                            }
+                        }
+                    }
+                }
+
                 using (ClikeStringArray cStrArray = new ClikeStringArray(fileCnt, Win32.MAX_PATH))
                 {
                     if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, cStrArray.NativePointer, fileCnt) != IntPtr.Zero)
-                        // Search for the XSLT file
+                    {
                         foreach (string file in cStrArray.ManagedStringsUnicode)
                         {
                             if (foundXML)
@@ -326,6 +361,7 @@ namespace ERPHelper
                                 foundXML = true;
                             }
                         }
+                    }
                     if (foundXML && foundXSLT)
                     {
                         if (!foundXForm)
@@ -463,6 +499,12 @@ namespace ERPHelper
             try
             {
                 Settings.Set(IniSection.State, tabControl.Name, e.TabPage.Name);
+                if(e.TabPage == tabIntSys)
+                {
+                    txtConnection.Text = cboConnections.SelectedItem.ToString();
+                    txtTenant2.Text = txtTenant.Text;
+                    txtUsername2.Text = txtUsername.Text;
+                }
             }
             catch (Exception ex)
             {
@@ -490,7 +532,7 @@ namespace ERPHelper
 
                 if (sample.Length > 0)
                 {
-                    sample = sample.Replace("bsvc:version=\"string\"", "bsvc:version=\"" + txtVersion1.Text + "\"");
+                    sample = sample.Replace("bsvc:version=\"string\"", "bsvc:version=\"" + txtVersion1.Text.EscapeXML() + "\"");
                     notepad.FileNew();
                     editor.SetXML(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + sample + Environment.NewLine);
                 }
@@ -566,6 +608,11 @@ namespace ERPHelper
 
         private void btnCallAPI_Click(object sender, EventArgs e)
         {
+            CallAPI(editor.GetAllText());
+        }
+
+        private void CallAPI(string data)
+        {
             try
             {
                 if (String.IsNullOrEmpty(lblPassword.Text))
@@ -585,8 +632,7 @@ namespace ERPHelper
                 string tenant = txtTenant.Text;
                 string username = txtUsername.Text + "@" + tenant;
                 string password = Crypto.Unprotect(lblPassword.Text);
-                string serviceURL = lnkApiUrl.Text;
-                string data = editor.GetAllText();
+                string serviceURL = lnkApiUrl.Text;                
 
                 try
                 {
@@ -617,7 +663,6 @@ namespace ERPHelper
                 string message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 MessageBox.Show(message, "Web API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void btnGetSOAP_Click(object sender, EventArgs e)
@@ -802,7 +847,7 @@ namespace ERPHelper
             try
             {
                 notepad.FileNew();
-                editor.SetXML(Properties.Resources.Sample_GetWorkers.Replace("{0}", txtVersion2.Text));
+                editor.SetXML(Properties.Resources.Sample_GetWorkers.Replace("{0}", txtVersion2.Text.EscapeXML()));
             }
             catch (Exception ex)
             {
@@ -875,6 +920,68 @@ namespace ERPHelper
         {
             radRaaS_CheckedChanged(sender, e);
             flwRestActions.Visible = false;
+        }
+
+        private void btnGet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                cboWWS2.SelectedIndex = cboWWS2.FindStringExact("Integrations");
+                string xml = Properties.Resources.IntSys_Get;
+                CallAPI(xml.Replace("{Integration_System_ID}", txtIntegrationSystemID.Text.EscapeXML()));
+                xml = editor.GetAllText();
+
+                // Convert the Get Response into a Put Request
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml);
+                XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
+                ns.AddNamespace("wd", "urn:com.workday/bsvc");
+                XmlNode node = xmlDoc.SelectSingleNode("//wd:Get_Integration_Systems_Response", ns);
+                node.InsertBefore(xmlDoc.SelectSingleNode("//wd:Integration_System_Reference", ns), xmlDoc.SelectSingleNode("//wd:Request_References", ns));
+                node.RemoveChild(xmlDoc.SelectSingleNode("//wd:Request_References", ns));
+                node.RemoveChild(xmlDoc.SelectSingleNode("//wd:Response_Results", ns));
+
+                XmlNode newNode = xmlDoc.CreateElement("wd", "Integration_System_Data", "urn:com.workday/bsvc");
+                newNode.InnerXml = xmlDoc.SelectSingleNode("//wd:Integration_System_Data", ns).InnerXml;
+                node.InsertBefore(newNode, xmlDoc.SelectSingleNode("//wd:Response_Data", ns));
+                node.RemoveChild(xmlDoc.SelectSingleNode("//wd:Response_Data", ns));
+
+                newNode = xmlDoc.CreateElement("wd", "Put_Integration_System_Request", "urn:com.workday/bsvc");
+                newNode.InnerXml = node.InnerXml;
+                xmlDoc.SelectSingleNode("//wd:Get_Integration_Systems_Response", ns).ParentNode.InsertBefore(newNode, node);
+                xmlDoc.SelectSingleNode("//wd:Get_Integration_Systems_Response", ns).ParentNode.RemoveChild(node);
+
+                editor.SetXML(new XDeclaration("1.0", "UTF-8", null).ToString() + Environment.NewLine + XDocument.Parse(xmlDoc.OuterXml).ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Integration Get Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPut_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CallAPI(editor.GetAllText());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Integration Put Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NppMenuCmd mnuCmd = NppMenuCmd.IDM_FILE_CLOSE;
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_MENUCOMMAND, 0, mnuCmd);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "Close Document Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

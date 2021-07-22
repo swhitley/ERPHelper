@@ -17,6 +17,10 @@ namespace ERPHelper
                              c == '-')).ToArray();
 
             return new string(arr);
-        }  
+        } 
+        public static string EscapeXML(this string input)
+        {
+            return input.Replace("<", "&lt;");
+        }
     }
 }

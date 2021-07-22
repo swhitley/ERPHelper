@@ -149,7 +149,7 @@ not be generated.</value>
   <data name="Instructions.XForm" xml:space="preserve">
     <value>1. Open the XML and XSLT documents.
 2. Position the tabs as shown (XML, XSLT).
-3. Select the XML document tab.
+3. Select the XML or XSLT document tab.
 4. Click the 'Transform' button.
 
 - Tab order is important.
@@ -192,5 +192,15 @@ but it is not required for the 'Call API' action.</value>
   <data name="Sample.Stylesheet" xml:space="preserve">
     <value>&lt;?xml version="1.0"?&gt;
 &lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/&gt;</value>
+  </data>
+  <data name="IntSys.Get" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="UTF - 8"?&gt;
+&lt;bsvc:Get_Integration_Systems_Request bsvc:version="v36.0" xmlns:bsvc="urn:com.workday/bsvc"&gt;
+	&lt;bsvc:Request_References&gt;
+		&lt;bsvc:Integration_System_Reference&gt;
+			&lt;bsvc:ID bsvc:type="Integration_System_ID"&gt;{Integration_System_ID}&lt;/bsvc:ID&gt;
+		&lt;/bsvc:Integration_System_Reference&gt;
+	&lt;/bsvc:Request_References&gt;
+&lt;/bsvc:Get_Integration_Systems_Request&gt;</value>
   </data>
 </root>
