@@ -178,16 +178,20 @@ namespace ERPHelper
                 return responseFromServer;
             }
         }
-        public static string CallRest(string username, string password, string url, string method, bool auth, string data = "")
+        public static string CallRest(string username, string password, string token, string url, string method, string data = "")
         {
             using (var webClient = new WebClient())
             {
                 ServicePointManager.Expect100Continue = true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                if (auth)
+                if (!String.IsNullOrEmpty(username))
                 {
                     webClient.Credentials = new NetworkCredential(username, password);
+                }
+                if(!String.IsNullOrEmpty(token))
+                {
+                    webClient.Headers.Add("Authorization", "Bearer " + token);
                 }
                 if(method != WebRequestMethods.Http.Get.ToUpper())
                 { 

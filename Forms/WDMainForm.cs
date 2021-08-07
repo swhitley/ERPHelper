@@ -37,9 +37,9 @@ namespace ERPHelper
                 lblWarning.Text = "";
                 // Tool Tips
                 toolTip1.SetToolTip(lnkXFormInst, Properties.Resources.Instructions_XForm);
-                toolTip1.SetToolTip(lnkCallAPIInst, Properties.Resources.Instructions_CallAPI);
+                toolTip1.SetToolTip(lnkInstCallAPI, Properties.Resources.Instructions_CallAPI);
                 toolTip1.SetToolTip(lnkApiUrl, Properties.Resources.Instructions_Click2Copy2Clipboard);
-                toolTip1.SetToolTip(lnkAddlActions, Properties.Resources.Instructions_AdditionalActions);
+                toolTip1.SetToolTip(lnkInstAddlActions, Properties.Resources.Instructions_AdditionalActions);
                 tabControl.DrawItem += new DrawItemEventHandler(tabControl_DrawItem);
                 // Web Services Download
                 string wdWebServicesURL = Settings.Get(IniSection.WDWebServices, IniKey.URL);
@@ -613,26 +613,37 @@ namespace ERPHelper
 
         private void CallAPI(string data)
         {
+            string tenant = "";
+            string username = "";
+            string password = "";
+            string token = "";
+            string serviceURL = "";
+
             try
             {
-                if (String.IsNullOrEmpty(lblPassword.Text))
+                if (radSoap.Checked || radRaaS.Checked)
                 {
-                    using (PasswordForm passwordForm = new PasswordForm())
+                    if (String.IsNullOrEmpty(lblPassword.Text))
                     {
-                        if (passwordForm.ShowDialog() == DialogResult.OK)
+                        using (PasswordForm passwordForm = new PasswordForm())
                         {
-                            lblPassword.Text = Crypto.Protect(passwordForm.Password);
-                        }
-                        else
-                        {
-                            return;
+                            if (passwordForm.ShowDialog() == DialogResult.OK)
+                            {
+                                lblPassword.Text = Crypto.Protect(passwordForm.Password);
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                     }
                 }
-                string tenant = txtTenant.Text;
-                string username = txtUsername.Text + "@" + tenant;
-                string password = Crypto.Unprotect(lblPassword.Text);
-                string serviceURL = lnkApiUrl.Text;                
+
+                tenant = txtTenant.Text;
+                username = txtUsername.Text + "@" + tenant;
+                password = Crypto.Unprotect(lblPassword.Text);
+                token = txtAccessToken.Text;
+                serviceURL = lnkApiUrl.Text;                
 
                 try
                 {
@@ -644,13 +655,31 @@ namespace ERPHelper
                     }
                     else
                     {
+                        username = txtUsername.Text;
                         string method = radGet.Text.ToUpper();
-                        foreach (RadioButton r in flwRestActions.Controls)
+                        if (radRaaS.Checked)
                         {
-                            if (r.Checked)
-                                method = r.Text.ToUpper();
+                            token = "";
                         }
-                        editor.SetXML(WDWebService.CallRest(txtUsername.Text, password, txtRest.Text, method, radRaaS.Checked, data));
+                        if (radREST.Checked)
+                        {
+                            username = "";
+                            foreach (RadioButton r in flwRestActions.Controls)
+                            {
+                                if (r.Checked)
+                                    method = r.Text.ToUpper();
+                            }
+                        }
+                        if (radGetNoAuth.Checked)
+                        {
+                            username = "";
+                            token = "";
+                        }
+                        string result = WDWebService.CallRest(username, password, token, txtRest.Text, method, data);
+                        if (!String.IsNullOrEmpty(result))
+                        {
+                            editor.SetXML(result);
+                        }
                     }
                 }
                 finally
@@ -784,7 +813,7 @@ namespace ERPHelper
             }
         }
 
-        private void lnkURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkApiUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
@@ -815,9 +844,9 @@ namespace ERPHelper
             toolTip1.SetToolTip(lnkXFormInst, Properties.Resources.Instructions_XForm);
         }
 
-        private void lnkCallAPIInst_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkInstCallAPI_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            toolTip1.SetToolTip(lnkCallAPIInst, Properties.Resources.Instructions_CallAPI);
+            toolTip1.SetToolTip(lnkInstCallAPI, Properties.Resources.Instructions_CallAPI);
         }
 
         private void tabWDStudioFiles_Resize(object sender, EventArgs e)
@@ -855,9 +884,9 @@ namespace ERPHelper
             }
         }
 
-        private void lnkAddlActions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkInstAddlActions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            toolTip1.SetToolTip(lnkAddlActions, Properties.Resources.Instructions_AdditionalActions);
+            toolTip1.SetToolTip(lnkInstAddlActions, Properties.Resources.Instructions_AdditionalActions);
         }
 
         private void lnkLatestUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -889,14 +918,14 @@ namespace ERPHelper
         private void radRaaS_CheckedChanged(object sender, EventArgs e)
         {
             cboWWS2.Visible = false;
-            txtVersion2.Visible = false;
+            flwVersion.Visible = false;
             lblService.Text = "Url";
-            lblVersion2.Visible = false;
             lnkApiUrl.Visible = false;
             txtRest.Visible = true;
             flwRestActions.Visible = false;
-            lnkCallAPIInst.Visible = false;
+            lnkInstCallAPI.Visible = false;
             lblInstructions2.Visible = false;
+            flwREST.Visible = false;
             grpActions.Refresh();
 
         }
@@ -904,22 +933,25 @@ namespace ERPHelper
         private void radSoap_CheckedChanged(object sender, EventArgs e)
         {
             cboWWS2.Visible = true;
-            txtVersion2.Visible = true;
+            flwVersion.Visible = true;
             lblService.Text = "Service";
-            lblVersion2.Visible = true;
             lnkApiUrl.Visible = true;
             txtRest.Visible = false;
-            flwRestActions.Visible = false;
-            lnkCallAPIInst.Visible = true;
+            
+            lnkInstCallAPI.Visible = true;
             lblInstructions2.Visible = true;
+
+            flwREST.Visible = false;
+            flwRestActions.Visible = false;
             grpActions.Refresh();
 
         }
 
-        private void radRestNoAuth_CheckedChanged(object sender, EventArgs e)
+        private void radGetNoAuth_CheckedChanged(object sender, EventArgs e)
         {
             radRaaS_CheckedChanged(sender, e);
             flwRestActions.Visible = false;
+            flwREST.Visible = false;
         }
 
         private void btnGet_Click(object sender, EventArgs e)
@@ -982,6 +1014,48 @@ namespace ERPHelper
             {
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Close Document Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void radREST_CheckedChanged(object sender, EventArgs e)
+        {
+            radRaaS_CheckedChanged(sender, e);
+            flwRestActions.Visible = true;
+            flwREST.Visible = true;
+            grpActions.Refresh();
+        }
+
+        private void btnXPath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                editor.AnnotationClearAll();
+                
+                if (txtXPath.Text.Length > 0)
+                {
+                    string xml = editor.GetAllText();
+                    Dictionary<int, string> lines = SaxonXForm.XPath(xml, txtXPath.Text);
+
+                    if (lines != null && lines.Count > 0)
+                    {
+                        editor.Annotate(lines);
+                    }
+                    else
+                    {
+                        lblWarning.Text = "No matches found.";
+                        Utils.TimerWarning(lblWarning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred. " + ex.Message, "XPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+
         }
     }
 }

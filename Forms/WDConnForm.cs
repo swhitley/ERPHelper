@@ -8,6 +8,8 @@ namespace ERPHelper.Forms
     {
         public string SelectedConnection { get; set; }
         public string Password { get; set; }
+        private bool _isDirty = false;
+        private bool _bypassDirty = false;
 
         public WDConnForm()
         {
@@ -15,6 +17,7 @@ namespace ERPHelper.Forms
 
             try
             {
+                DirtyBypass();
                 toolTip1.SetToolTip(lnkConnURL, Properties.Resources.Instructions_Click2Copy2Clipboard);
                 toolTip1.SetToolTip(lnkSavePassword, Properties.Resources.Instructions_SavePassword);
 
@@ -31,20 +34,37 @@ namespace ERPHelper.Forms
                         lstConnections.Items.Add(conn);
                     }
                 }
+                btnNew_Click(null, null);
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Error initializing the connection form. " + ex.Message, "Connections Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            btnNew_Click(null, null);
+            finally
+            {
+                DirtyBypass(false);
+            }
+            
         }
 
         protected override void OnShown(EventArgs e)
         {
-            int ndx = lstConnections.FindStringExact(this.SelectedConnection);
-            if (ndx != ListBox.NoMatches)
+            try
             {
-                lstConnections.SelectedIndex = ndx;
+                DirtyBypass();
+                int ndx = lstConnections.FindStringExact(this.SelectedConnection);
+                if (ndx != ListBox.NoMatches)
+                {
+                    lstConnections.SelectedIndex = ndx;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing the connection form. " + ex.Message, "Connections Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DirtyBypass(false);
             }
 
         }
@@ -57,6 +77,7 @@ namespace ERPHelper.Forms
                 {
                     try
                     {
+                        DirtyBypass();
                         string conn = lstConnections.SelectedItem.ToString();
                         Settings.DeleteSection(IniSection.Connection, conn);
                         lstConnections.Items.RemoveAt(lstConnections.SelectedIndex);
@@ -68,6 +89,11 @@ namespace ERPHelper.Forms
                     catch(Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Deletion Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        DirtyBypass(false);
+                        DirtySet(false);
                     }
                 }
             }
@@ -142,6 +168,7 @@ namespace ERPHelper.Forms
                     }
                 }
                 MessageBox.Show("Saved", "Connection Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DirtySet(false);
             }
             catch (Exception ex)
             {
@@ -155,6 +182,7 @@ namespace ERPHelper.Forms
             {
                 try
                 {
+                    DirtyBypass();
                     string conn = lstConnections.SelectedItem.ToString();
                     SelectedConnection = conn;
                     txtName.Text = conn;
@@ -173,6 +201,10 @@ namespace ERPHelper.Forms
                 {
                     MessageBox.Show("Error selecting a connection. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    DirtyBypass(false);
+                }
             }
         }
 
@@ -185,6 +217,7 @@ namespace ERPHelper.Forms
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            DirtyBypass();
             lstConnections.SelectedIndex = -1;
             txtName.Text = "";
             txtName.Enabled = true;
@@ -194,6 +227,7 @@ namespace ERPHelper.Forms
             chkSavePassword.Checked = false;
             txtPassword.Text = "";
             this.Password = "";
+            DirtyBypass(false);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -203,7 +237,14 @@ namespace ERPHelper.Forms
 
         private void cboConnEnv_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DirtySet();
             lnkConnURL.Text = "";
+            try
+            {
+                lnkConnURL.Text = ((WDURLItem)cboConnEnv.SelectedItem).Key;
+            }
+            // ignore error
+            catch { }
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -246,6 +287,7 @@ namespace ERPHelper.Forms
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
+            DirtySet();
             if (lstConnections.ValuesToString(((TextBox)sender).Text).Length > 500)
             {
                 MessageBox.Show("List of all names cannot exceed 500 characters.", "Maximum Name List", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -264,7 +306,49 @@ namespace ERPHelper.Forms
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
+            DirtySet();
+        }
 
+        private void txtTenant_TextChanged(object sender, EventArgs e)
+        {
+            DirtySet();
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+            DirtySet();
+        }
+
+        private void WDConnForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this._isDirty)
+            {
+                var res = MessageBox.Show(this, "Unsaved data will be lost.\nDo you want to close the Connections form?", "Unsaved Data",
+                      MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (res != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+        }
+
+        private void chkSavePassword_CheckedChanged(object sender, EventArgs e)
+        {
+            DirtySet();
+        }
+
+        private void DirtySet(bool isDirty = true)
+        {
+            if (!this._bypassDirty)
+            {
+                this._isDirty = isDirty;
+            }
+        }
+
+        private void DirtyBypass(bool bypassDirty = true)
+        {
+            this._bypassDirty = bypassDirty;
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
+using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using Saxon.Api;
-
+using System.Collections.Generic;
 
 namespace ERPHelper
 {
@@ -85,6 +89,36 @@ namespace ERPHelper
                 throw e;
             }
             return results;
+        }
+
+        public static Dictionary<int, string> XPath(string xmlData, string xPath)
+        {
+            Processor processor = new Processor();
+            XPathCompiler compiler = processor.NewXPathCompiler();
+   
+            XDocument xDoc = XDocument.Parse(xmlData);           
+           
+            // Detect namespaces in the document so the user doesn't have to specify them.
+            var xmlNameSpaceList = ((IEnumerable)xDoc.XPathEvaluate(@"//namespace::*[not(. = ../../namespace::*)]")).Cast<XAttribute>();
+            foreach (var nsNode in xmlNameSpaceList)
+            {
+                compiler.DeclareNamespace(nsNode.Name.LocalName, nsNode.Value);
+            }
+            
+            DocumentBuilder documentBuilder = processor.NewDocumentBuilder();
+            documentBuilder.IsLineNumbering = true;
+            documentBuilder.BaseUri = new Uri("file://");
+            XdmNode document = documentBuilder.Build(new StringReader(xmlData));       
+            XPathSelector selector = compiler.Compile(xPath).Load();            
+            selector.ContextItem = document;
+            
+            XdmValue values = selector.Evaluate();
+            Dictionary<int, string> lines = new Dictionary<int, string>();
+            foreach(XdmNode value in values)
+            {
+                lines.Add(value.LineNumber - 1, value.ToString());
+            }
+            return lines;
         }
     }
 }

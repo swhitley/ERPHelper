@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace ERPHelper
     {
         void SetXML(string xml);
         string GetAllText();
+        void Annotate(Dictionary<int, string> lines);
     }
     class CScintillaGateway : ScintillaGateway, ICScintillaGateway
     {
@@ -45,6 +47,22 @@ namespace ERPHelper
                 text += this.GetTargetText();
             }
             return text;           
+        }
+
+        public void Annotate(Dictionary<int, string> lines)
+        {
+            this.AnnotationClearAll();
+
+            if (lines.Count < 1)
+                return;                 
+            
+            foreach(int line in lines.Keys)
+            {
+                this.GotoLine(line);
+                this.AnnotationSetText(line, lines[line]);
+                this.AnnotationSetStyle(line, 10);
+                this.AnnotationSetVisible(2);
+            }
         }
     }
 }
