@@ -50,7 +50,7 @@ namespace ERPHelper
                     try
                     {
                         // Clear any older versions
-                        foreach(string file in Directory.GetFiles(iniFolder, wwsFilePart + "*.*"))
+                        foreach (string file in Directory.GetFiles(iniFolder, wwsFilePart + "*.*"))
                         {
                             File.Delete(file);
                         }
@@ -68,20 +68,20 @@ namespace ERPHelper
                     {
                         wdWebServices = WDWebService.Load(File.ReadAllText(iniFolder + "\\" + wwsFile));
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Settings.Set(IniSection.WDWebServices, IniKey.URL, "");
                     }
                 }
-                foreach(KeyValuePair<string,string> service in wdWebServices)
+                foreach (KeyValuePair<string, string> service in wdWebServices)
                 {
                     try
                     {
                         Uri uri = new Uri(service.Key);
-                        verDefault = uri.Segments[uri.Segments.Length - 2].Replace("/","");
+                        verDefault = uri.Segments[uri.Segments.Length - 2].Replace("/", "");
                     }
-                    catch 
-                    { 
+                    catch
+                    {
                         // ignore exception
                     }
                     break;
@@ -126,7 +126,7 @@ namespace ERPHelper
                 cboXSD_Load(cboWWS1.ReturnKey());
                 cboXSD.SelectedIndex = cboXSD.FindStringExact(Settings.Get(IniSection.State, cboXSD.Name));
                 txtVersion1.Text = Settings.Get(IniSection.WDWebServices, IniKey.Version);
-                if(String.IsNullOrEmpty(txtVersion1.Text))
+                if (String.IsNullOrEmpty(txtVersion1.Text))
                 {
                     txtVersion1.Text = verDefault;
                 }
@@ -156,7 +156,7 @@ namespace ERPHelper
                 }
                 if (!task.Result.UpdateAvailable)
                 {
-                  tabControl.Controls.Remove(tabUpdate);
+                    tabControl.Controls.Remove(tabUpdate);
                 }
 
                 // Init as Soap
@@ -164,7 +164,10 @@ namespace ERPHelper
                 radGet.Checked = true;
 
                 // Init IntSyst Tab
-                txtConnection.Text = cboConnections.SelectedItem.ToString();
+                if (cboConnections.SelectedIndex >= 0)
+                {
+                    txtConnection.Text = cboConnections.SelectedItem.ToString();
+                }
                 txtTenant2.Text = txtTenant.Text;
                 txtUsername2.Text = txtUsername.Text;
 
@@ -214,7 +217,7 @@ namespace ERPHelper
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Connections Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -254,7 +257,7 @@ namespace ERPHelper
                 _stringFlags.LineAlignment = StringAlignment.Center;
                 g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Tab Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -294,7 +297,7 @@ namespace ERPHelper
                 xmlData = editor.GetAllText();
 
                 // Identify the current document as XSLT.
-                if(xmlData.IndexOf("</xsl:stylesheet>") > 0)
+                if (xmlData.IndexOf("</xsl:stylesheet>") > 0)
                 {
                     onXSLT = true;
                 }
@@ -322,7 +325,7 @@ namespace ERPHelper
                                     xmlFileName = notepad.GetCurrentFilePath();
                                     xmlData = editor.GetAllText();
                                     break;
-                                }                                
+                                }
                                 prevFile = file;
                             }
                         }
@@ -388,7 +391,7 @@ namespace ERPHelper
                 MessageBox.Show(message, "ERP Helper", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (foundXForm)
                 {
-                    if(working.Length == 0)
+                    if (working.Length == 0)
                     {
                         try
                         {
@@ -398,7 +401,7 @@ namespace ERPHelper
                         {
                             // ignore exception
                         }
-                    }                        
+                    }
                 }
             }
             finally
@@ -419,13 +422,13 @@ namespace ERPHelper
                     txtWDStudioFolder.Text = folderBrowserDialog1.SelectedPath;
                     folderBrowserDialog1.Dispose();
                     Application.DoEvents();
-                    Thread.Sleep(250);                    
+                    Thread.Sleep(250);
                     Settings.Set(IniSection.WDStudio, IniKey.Workspace, txtWDStudioFolder.Text);
                     TreeViewUpdate(txtWDStudioFolder.Text, txtFilter.Text);
                 }
-                             
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // ignore exception
             }
@@ -499,9 +502,12 @@ namespace ERPHelper
             try
             {
                 Settings.Set(IniSection.State, tabControl.Name, e.TabPage.Name);
-                if(e.TabPage == tabIntSys)
+                if (e.TabPage == tabIntSys)
                 {
-                    txtConnection.Text = cboConnections.SelectedItem.ToString();
+                    if (cboConnections.SelectedIndex >= 0)
+                    {
+                        txtConnection.Text = cboConnections.SelectedItem.ToString();
+                    }
                     txtTenant2.Text = txtTenant.Text;
                     txtUsername2.Text = txtUsername.Text;
                 }
@@ -541,7 +547,7 @@ namespace ERPHelper
                     throw new Exception("Sample could not be generated.  Check for a valid Service and Operation.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Generate XML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -600,7 +606,7 @@ namespace ERPHelper
                     cboXSD.SavedDatasource = null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An unexpected error occurred. " + ex.Message, "Load Operations Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -611,7 +617,7 @@ namespace ERPHelper
             CallAPI(editor.GetAllText());
         }
 
-        private void CallAPI(string data)
+        private void CallAPI(string data, string method = "GET")
         {
             string tenant = "";
             string username = "";
@@ -643,7 +649,7 @@ namespace ERPHelper
                 username = txtUsername.Text + "@" + tenant;
                 password = Crypto.Unprotect(lblPassword.Text);
                 token = txtAccessToken.Text;
-                serviceURL = lnkApiUrl.Text;                
+                serviceURL = lnkApiUrl.Text;
 
                 try
                 {
@@ -656,7 +662,6 @@ namespace ERPHelper
                     else
                     {
                         username = txtUsername.Text;
-                        string method = radGet.Text.ToUpper();
                         if (radRaaS.Checked)
                         {
                             token = "";
@@ -675,7 +680,7 @@ namespace ERPHelper
                             username = "";
                             token = "";
                         }
-                        string result = WDWebService.CallRest(username, password, token, txtRest.Text, method, data);
+                        string result = WDWebService.CallRest(tenant, username, password, token, txtRest.Text, method, data);
                         if (!String.IsNullOrEmpty(result))
                         {
                             editor.SetXML(result);
@@ -786,7 +791,7 @@ namespace ERPHelper
             {
                 try
                 {
-                    Settings.Set(IniSection.State, cboWWS2.Name,cboWWS2.ReturnValue());
+                    Settings.Set(IniSection.State, cboWWS2.Name, cboWWS2.ReturnValue());
                     string conn = cboConnections.SelectedItem.ToString();
                     string service = cboWWS2.ReturnValue();
                     lnkApiUrl.Text = WDWebService.BuildApiUrl(conn, service, txtVersion2.Text);
@@ -937,7 +942,7 @@ namespace ERPHelper
             lblService.Text = "Service";
             lnkApiUrl.Visible = true;
             txtRest.Visible = false;
-            
+
             lnkInstCallAPI.Visible = true;
             lblInstructions2.Visible = true;
 
@@ -958,7 +963,11 @@ namespace ERPHelper
         {
             try
             {
+                // Set Call API Controls
                 cboWWS2.SelectedIndex = cboWWS2.FindStringExact("Integrations");
+                radSoap.Checked = true;
+                //
+
                 string xml = Properties.Resources.IntSys_Get;
                 CallAPI(xml.Replace("{Integration_System_ID}", txtIntegrationSystemID.Text.EscapeXML()));
                 xml = editor.GetAllText();
@@ -995,6 +1004,10 @@ namespace ERPHelper
         {
             try
             {
+                // Set Call API Controls
+                cboWWS2.SelectedIndex = cboWWS2.FindStringExact("Integrations");
+                radSoap.Checked = true;
+                //
                 CallAPI(editor.GetAllText());
             }
             catch (Exception ex)
@@ -1030,7 +1043,7 @@ namespace ERPHelper
             {
                 Cursor = Cursors.WaitCursor;
                 editor.AnnotationClearAll();
-                
+
                 if (txtXPath.Text.Length > 0)
                 {
                     string xml = editor.GetAllText();
@@ -1039,6 +1052,11 @@ namespace ERPHelper
                     if (lines != null && lines.Count > 0)
                     {
                         editor.Annotate(lines);
+                        if (chkXPathNewWindow.Checked)
+                        {
+                            notepad.FileNew();
+                            editor.SetText(String.Join("\n", (new List<string>(lines.Values)).ToArray()));
+                        }
                     }
                     else
                     {

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WDMainForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabXForm = new System.Windows.Forms.TabPage();
+            this.chkXPathNewWindow = new System.Windows.Forms.CheckBox();
             this.lblXPath = new System.Windows.Forms.Label();
             this.btnXPath = new System.Windows.Forms.Button();
             this.txtXPath = new System.Windows.Forms.TextBox();
@@ -207,6 +208,7 @@
             // 
             this.tabXForm.AutoScroll = true;
             this.tabXForm.BackColor = System.Drawing.SystemColors.Info;
+            this.tabXForm.Controls.Add(this.chkXPathNewWindow);
             this.tabXForm.Controls.Add(this.lblXPath);
             this.tabXForm.Controls.Add(this.btnXPath);
             this.tabXForm.Controls.Add(this.txtXPath);
@@ -222,6 +224,16 @@
             this.tabXForm.Size = new System.Drawing.Size(492, 574);
             this.tabXForm.TabIndex = 0;
             this.tabXForm.Text = "XSLT";
+            // 
+            // chkXPathNewWindow
+            // 
+            this.chkXPathNewWindow.AutoSize = true;
+            this.chkXPathNewWindow.Location = new System.Drawing.Point(19, 376);
+            this.chkXPathNewWindow.Name = "chkXPathNewWindow";
+            this.chkXPathNewWindow.Size = new System.Drawing.Size(296, 24);
+            this.chkXPathNewWindow.TabIndex = 12;
+            this.chkXPathNewWindow.Text = "Show XPath results in a new window.";
+            this.chkXPathNewWindow.UseVisualStyleBackColor = true;
             // 
             // lblXPath
             // 
@@ -326,7 +338,7 @@
             // lblWarning
             // 
             this.lblWarning.AutoSize = true;
-            this.lblWarning.Location = new System.Drawing.Point(10, 405);
+            this.lblWarning.Location = new System.Drawing.Point(11, 440);
             this.lblWarning.Name = "lblWarning";
             this.lblWarning.Size = new System.Drawing.Size(275, 20);
             this.lblWarning.TabIndex = 1;
@@ -1595,5 +1607,6 @@
         private System.Windows.Forms.Button btnXPath;
         private System.Windows.Forms.TextBox txtXPath;
         private System.Windows.Forms.Label lblXPath;
+        private System.Windows.Forms.CheckBox chkXPathNewWindow;
     }
 }

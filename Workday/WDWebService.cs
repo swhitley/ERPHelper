@@ -178,7 +178,7 @@ namespace ERPHelper
                 return responseFromServer;
             }
         }
-        public static string CallRest(string username, string password, string token, string url, string method, string data = "")
+        public static string CallRest(string tenant, string username, string password, string token, string url, string method, string data = "")
         {
             using (var webClient = new WebClient())
             {
@@ -187,7 +187,11 @@ namespace ERPHelper
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                 if (!String.IsNullOrEmpty(username))
                 {
-                    webClient.Credentials = new NetworkCredential(username, password);
+                    webClient.Credentials = new NetworkCredential(username + "@" + tenant, password);
+                    webClient.Headers.Add("X-Originator", "Studio");
+                    webClient.Headers.Add("X-Tenant", tenant);
+                    Byte[] bytes = Convert.FromBase64String(data);
+                    webClient.UploadData(url, bytes);
                 }
                 if(!String.IsNullOrEmpty(token))
                 {
