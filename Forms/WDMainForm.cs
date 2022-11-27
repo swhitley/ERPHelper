@@ -1075,5 +1075,20 @@ namespace ERPHelper
             }
 
         }
+
+        private void btnXSLTWrapper_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string xmlData = editor.GetAllText();
+                notepad.FileNew();
+                editor.SetXML(WDXMLSample.WrapXSLT(xmlData) + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "XSLT Wrapper Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-       
+
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WDMainForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabXForm = new System.Windows.Forms.TabPage();
+            this.btnTransform = new System.Windows.Forms.Button();
+            this.btnXSLTWrapper = new System.Windows.Forms.Button();
             this.chkXPathNewWindow = new System.Windows.Forms.CheckBox();
             this.lblXPath = new System.Windows.Forms.Label();
             this.btnXPath = new System.Windows.Forms.Button();
@@ -42,7 +44,6 @@
             this.lnkXFormInst = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnTransform = new System.Windows.Forms.Button();
             this.lblWarning = new System.Windows.Forms.Label();
             this.tabWDStudioFiles = new System.Windows.Forms.TabPage();
             this.pnlTreeView = new System.Windows.Forms.Panel();
@@ -208,6 +209,8 @@
             // 
             this.tabXForm.AutoScroll = true;
             this.tabXForm.BackColor = System.Drawing.SystemColors.Info;
+            this.tabXForm.Controls.Add(this.btnTransform);
+            this.tabXForm.Controls.Add(this.btnXSLTWrapper);
             this.tabXForm.Controls.Add(this.chkXPathNewWindow);
             this.tabXForm.Controls.Add(this.lblXPath);
             this.tabXForm.Controls.Add(this.btnXPath);
@@ -216,7 +219,6 @@
             this.tabXForm.Controls.Add(this.flowLayoutPanel13);
             this.tabXForm.Controls.Add(this.pictureBox1);
             this.tabXForm.Controls.Add(this.label2);
-            this.tabXForm.Controls.Add(this.btnTransform);
             this.tabXForm.Controls.Add(this.lblWarning);
             this.tabXForm.Location = new System.Drawing.Point(114, 4);
             this.tabXForm.Name = "tabXForm";
@@ -225,10 +227,31 @@
             this.tabXForm.TabIndex = 0;
             this.tabXForm.Text = "XSLT";
             // 
+            // btnTransform
+            // 
+            this.btnTransform.Location = new System.Drawing.Point(15, 238);
+            this.btnTransform.Name = "btnTransform";
+            this.btnTransform.Size = new System.Drawing.Size(152, 38);
+            this.btnTransform.TabIndex = 0;
+            this.btnTransform.Text = "Transform";
+            this.btnTransform.UseVisualStyleBackColor = true;
+            this.btnTransform.Click += new System.EventHandler(this.btnTransform_Click);
+            // 
+            // btnXSLTWrapper
+            // 
+            this.btnXSLTWrapper.Location = new System.Drawing.Point(183, 238);
+            this.btnXSLTWrapper.Margin = new System.Windows.Forms.Padding(3, 25, 3, 3);
+            this.btnXSLTWrapper.Name = "btnXSLTWrapper";
+            this.btnXSLTWrapper.Size = new System.Drawing.Size(152, 38);
+            this.btnXSLTWrapper.TabIndex = 28;
+            this.btnXSLTWrapper.Text = "Convert to XSLT";
+            this.btnXSLTWrapper.UseVisualStyleBackColor = true;
+            this.btnXSLTWrapper.Click += new System.EventHandler(this.btnXSLTWrapper_Click);
+            // 
             // chkXPathNewWindow
             // 
             this.chkXPathNewWindow.AutoSize = true;
-            this.chkXPathNewWindow.Location = new System.Drawing.Point(19, 376);
+            this.chkXPathNewWindow.Location = new System.Drawing.Point(19, 451);
             this.chkXPathNewWindow.Name = "chkXPathNewWindow";
             this.chkXPathNewWindow.Size = new System.Drawing.Size(296, 24);
             this.chkXPathNewWindow.TabIndex = 12;
@@ -238,7 +261,7 @@
             // lblXPath
             // 
             this.lblXPath.AutoSize = true;
-            this.lblXPath.Location = new System.Drawing.Point(15, 309);
+            this.lblXPath.Location = new System.Drawing.Point(15, 350);
             this.lblXPath.Name = "lblXPath";
             this.lblXPath.Size = new System.Drawing.Size(53, 20);
             this.lblXPath.TabIndex = 11;
@@ -247,7 +270,7 @@
             // btnXPath
             // 
             this.btnXPath.Image = global::ERPHelper.Properties.Resources.Filter_16x;
-            this.btnXPath.Location = new System.Drawing.Point(344, 330);
+            this.btnXPath.Location = new System.Drawing.Point(344, 375);
             this.btnXPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.btnXPath.Name = "btnXPath";
             this.btnXPath.Size = new System.Drawing.Size(32, 32);
@@ -257,14 +280,16 @@
             // 
             // txtXPath
             // 
-            this.txtXPath.Location = new System.Drawing.Point(15, 333);
+            this.txtXPath.AcceptsReturn = true;
+            this.txtXPath.Location = new System.Drawing.Point(15, 374);
+            this.txtXPath.Multiline = true;
             this.txtXPath.Name = "txtXPath";
-            this.txtXPath.Size = new System.Drawing.Size(323, 26);
+            this.txtXPath.Size = new System.Drawing.Size(323, 60);
             this.txtXPath.TabIndex = 9;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(186, 192);
+            this.btnClose.Location = new System.Drawing.Point(15, 287);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(152, 38);
             this.btnClose.TabIndex = 8;
@@ -276,7 +301,7 @@
             // 
             this.flowLayoutPanel13.Controls.Add(this.label6);
             this.flowLayoutPanel13.Controls.Add(this.lnkXFormInst);
-            this.flowLayoutPanel13.Location = new System.Drawing.Point(15, 238);
+            this.flowLayoutPanel13.Location = new System.Drawing.Point(14, 179);
             this.flowLayoutPanel13.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.flowLayoutPanel13.Name = "flowLayoutPanel13";
             this.flowLayoutPanel13.Size = new System.Drawing.Size(214, 51);
@@ -325,20 +350,10 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Transform an XML file using XSLT";
             // 
-            // btnTransform
-            // 
-            this.btnTransform.Location = new System.Drawing.Point(15, 192);
-            this.btnTransform.Name = "btnTransform";
-            this.btnTransform.Size = new System.Drawing.Size(152, 38);
-            this.btnTransform.TabIndex = 0;
-            this.btnTransform.Text = "Transform";
-            this.btnTransform.UseVisualStyleBackColor = true;
-            this.btnTransform.Click += new System.EventHandler(this.btnTransform_Click);
-            // 
             // lblWarning
             // 
             this.lblWarning.AutoSize = true;
-            this.lblWarning.Location = new System.Drawing.Point(11, 440);
+            this.lblWarning.Location = new System.Drawing.Point(11, 503);
             this.lblWarning.Name = "lblWarning";
             this.lblWarning.Size = new System.Drawing.Size(275, 20);
             this.lblWarning.TabIndex = 1;
@@ -518,7 +533,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 52);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(394, 418);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(394, 514);
             this.flowLayoutPanel1.TabIndex = 13;
             // 
             // lblWWS
@@ -598,7 +613,7 @@
             this.btnGenXML.Name = "btnGenXML";
             this.btnGenXML.Size = new System.Drawing.Size(208, 38);
             this.btnGenXML.TabIndex = 4;
-            this.btnGenXML.Text = "Generate";
+            this.btnGenXML.Text = "Generate Request";
             this.btnGenXML.UseVisualStyleBackColor = true;
             this.btnGenXML.Click += new System.EventHandler(this.btnGenXML_Click);
             // 
@@ -1608,5 +1623,6 @@
         private System.Windows.Forms.TextBox txtXPath;
         private System.Windows.Forms.Label lblXPath;
         private System.Windows.Forms.CheckBox chkXPathNewWindow;
+        private System.Windows.Forms.Button btnXSLTWrapper;
     }
 }
