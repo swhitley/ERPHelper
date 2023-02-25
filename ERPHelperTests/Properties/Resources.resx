@@ -153,15 +153,15 @@
 &lt;/xsl:stylesheet&gt;</value>
   </data>
   <data name="SaxonXFromOutput" xml:space="preserve">
-    <value>&lt;HTML&gt;
+    <value>&lt;!DOCTYPE HTML&gt;&lt;HTML&gt;
    &lt;HEAD&gt;
-      &lt;TITLE/&gt;
+      &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+      &lt;TITLE&gt;&lt;/TITLE&gt;
    &lt;/HEAD&gt;
    &lt;BODY&gt;
       &lt;H1&gt;Hello, World!&lt;/H1&gt;
       &lt;DIV&gt;To
-			&lt;I&gt;A Developer&lt;/I&gt;
-      &lt;/DIV&gt;
+         			&lt;I&gt;A Developer&lt;/I&gt;&lt;/DIV&gt;
    &lt;/BODY&gt;
 &lt;/HTML&gt;</value>
   </data>

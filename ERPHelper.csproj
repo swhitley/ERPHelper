@@ -77,25 +77,25 @@
       <HintPath>packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Charsets, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.Charsets.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.Charsets.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Localedata, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.Localedata.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.Localedata.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Text, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.Text.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.Text.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.Util, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.Util.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.Util.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.OpenJDK.XML.API, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.OpenJDK.XML.API.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.OpenJDK.XML.API.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\IKVM.Runtime.dll</HintPath>
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\IKVM.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -106,14 +106,14 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Octokit, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
-      <HintPath>packages\Octokit.4.0.2\lib\netstandard2.0\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=5.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+      <HintPath>packages\Octokit.5.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
     </Reference>
-    <Reference Include="saxon-he-10.8, Version=10.8.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\saxon-he-10.8.dll</HintPath>
+    <Reference Include="saxon-he-10.9, Version=10.9.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\saxon-he-10.9.dll</HintPath>
     </Reference>
-    <Reference Include="saxon-he-api-10.8, Version=10.8.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
-      <HintPath>packages\Saxon-HE.10.8.0\lib\net40\saxon-he-api-10.8.dll</HintPath>
+    <Reference Include="saxon-he-api-10.9, Version=10.9.0.0, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <HintPath>packages\Saxon-HE.10.9.0\lib\net35\saxon-he-api-10.9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -131,8 +131,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Diagnostics.DiagnosticSource.7.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.DiagnosticSource.7.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Tracing, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Diagnostics.Tracing.4.3.0\lib\net462\System.Diagnostics.Tracing.dll</HintPath>
@@ -250,8 +250,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Text.Json.7.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Octokit;
 using System.Reflection;
+using System.Net;
 
 namespace ERPHelper
 {
@@ -15,7 +16,8 @@ namespace ERPHelper
             GitHubRelease release = new GitHubRelease();
             try
             {
-                
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 GitHubClient client = new GitHubClient(new ProductHeaderValue("erp-helper"));
                 Release latestRelease = await client.Repository.Release.GetLatest("swhitley", "ERPHelper");
                 Version latestGitHubVersion = new Version(latestRelease.TagName.Replace("v", ""));                

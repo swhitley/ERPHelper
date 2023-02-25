@@ -15,6 +15,7 @@ namespace ERPHelper
         public static string TransformXml(string xmlData, string xslData)
         {
             string results = "";
+            string xml = "";
             try
             {
                 // Saxon Transformation Start
@@ -28,11 +29,29 @@ namespace ERPHelper
 
                 XsltTransformer xsltTransformer = xsltExecutable.Load();
                 xsltTransformer.InitialContextNode = xdmNode;
-               
-                XdmDestination xdmDest = new XdmDestination();
-                xsltTransformer.Run(xdmDest);
-                // Saxon Transformation End
 
+                Serializer serializer = xsltProcessor.NewSerializer();
+
+                using (Stream stream = new MemoryStream())
+                {
+                    serializer.SetOutputStream(stream);
+
+                    xsltTransformer.Run(serializer);
+                    // Saxon Transformation End
+
+                    // Stream to String
+                    stream.Position = 0;
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        xml = reader.ReadToEnd();
+                    }
+                    try
+                    {
+                        XDocument doc = XDocument.Parse(xml);
+                        xml = doc.ToString();
+                    }
+                    catch (Exception) { }
+                }
 
                 // Handle XML Declaration
                 string version = "1.0";
@@ -73,7 +92,7 @@ namespace ERPHelper
                         }
                     }
                     // Attempt to prevent duplicate declaration
-                    if (xdmDest.XdmNode.OuterXml.StartsWith("<?"))
+                    if (xml.StartsWith("<?"))
                     {
                         declaration = "";
                     }
@@ -82,7 +101,7 @@ namespace ERPHelper
                 {
                     // ignore exception
                 }
-                results =  declaration + xdmDest.XdmNode.OuterXml;
+                results = declaration + xml;
             }
             catch (Exception e)
             {
