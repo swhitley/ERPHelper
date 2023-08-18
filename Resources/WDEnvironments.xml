@@ -36,6 +36,10 @@
     <e2-endpoint>wd3-e2-impl.workday.com</e2-endpoint>
     <app-endpoint></app-endpoint>
   </env>
+  <env name="Sandbox (WD5)" type="sbox">
+    <e2-endpoint>wd5-impl.workday.com</e2-endpoint>
+    <app-endpoint></app-endpoint>
+  </env>
   <env name="Sandbox (WD12)" type="sbox">
     <e2-endpoint>impl-e2.wd12.myworkday.com</e2-endpoint>
     <app-endpoint></app-endpoint>
