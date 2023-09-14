@@ -309,80 +309,73 @@ namespace ERPHelper
                 // Count of opened files
                 int fileCnt = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, 0, 0);
 
+                List<string> files = Utils.GetOpenedFiles();
+
                 // If viewing XSLT, select the XML file before it.
                 if (onXSLT)
                 {
-                    using (ClikeStringArray cStrArray = new ClikeStringArray(fileCnt, Win32.MAX_PATH))
+        
+                    string prevFile = "";
+                    foreach(string file in files)
                     {
-                        if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, cStrArray.NativePointer, fileCnt) != IntPtr.Zero)
+                        if (file == xmlFileName)
                         {
-                            string prevFile = "";
-                            foreach (string file in cStrArray.ManagedStringsUnicode)
-                            {
-                                if (file == xmlFileName)
-                                {
-                                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, prevFile);
-                                    xmlFileName = notepad.GetCurrentFilePath();
-                                    xmlData = editor.GetAllText();
-                                    break;
-                                }
-                                prevFile = file;
-                            }
+                            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, prevFile);
+                            xmlFileName = notepad.GetCurrentFilePath();
+                            xmlData = editor.GetAllText();
+                            break;
                         }
+                        prevFile = file;
                     }
+              
                 }
 
-                using (ClikeStringArray cStrArray = new ClikeStringArray(fileCnt, Win32.MAX_PATH))
+                foreach (string file in files)
                 {
-                    if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, cStrArray.NativePointer, fileCnt) != IntPtr.Zero)
+                    if (foundXML)
                     {
-                        foreach (string file in cStrArray.ManagedStringsUnicode)
+                        // Check for an XML document
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, file);
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETCURRENTLANGTYPE, 0, ref docType);
+                        isDocTypeXML = docType == LangType.L_XML;
+                        if (isDocTypeXML && !foundXSLT)
                         {
-                            if (foundXML)
+                            foundXSLT = true;
+                            xslData = editor.GetAllText();
+                        }
+                        if (foundXSLT)
+                        {
+                            if (file.ToLower().IndexOf(".xform") > 0)
                             {
-                                // Check for an XML document
                                 Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, file);
-                                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETCURRENTLANGTYPE, 0, ref docType);
-                                isDocTypeXML = docType == LangType.L_XML;
-                                if (isDocTypeXML && !foundXSLT)
-                                {
-                                    foundXSLT = true;
-                                    xslData = editor.GetAllText();
-                                }
-                                if (foundXSLT)
-                                {
-                                    if (file.ToLower().IndexOf(".xform") > 0)
-                                    {
-                                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, file);
-                                        foundXForm = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (file == xmlFileName)
-                            {
-                                foundXML = true;
+                                foundXForm = true;
+                                break;
                             }
                         }
                     }
-                    if (foundXML && foundXSLT)
+                    if (file == xmlFileName)
                     {
-                        if (!foundXForm)
-                        {
-                            notepad.FileNew();
-                            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SAVECURRENTFILEAS, 0, Path.GetTempFileName() + ".xform");
-                            foundXForm = true;
-                        }
-                        editor.SetText(working);
-                        working = "";
-                        Application.DoEvents();
-                        var data = SaxonXForm.TransformXml(xmlData, xslData);
-                        editor.SetXML(data + Environment.NewLine);
+                        foundXML = true;
                     }
-                    else
+                }
+            
+                if (foundXML && foundXSLT)
+                {
+                    if (!foundXForm)
                     {
-                        MessageBox.Show("The XML and XSLT documents could not be identified.", "ERP Helper", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        notepad.FileNew();
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SAVECURRENTFILEAS, 0, Path.GetTempFileName() + ".xform");
+                        foundXForm = true;
                     }
+                    editor.SetText(working);
+                    working = "";
+                    Application.DoEvents();
+                    var data = SaxonXForm.TransformXml(xmlData, xslData);
+                    editor.SetXML(data + Environment.NewLine);
+                }
+                else
+                {
+                    MessageBox.Show("The XML and XSLT documents could not be identified.", "ERP Helper", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)

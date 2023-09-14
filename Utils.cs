@@ -1,6 +1,9 @@
 ﻿using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Text;
+using Kbg.NppPluginNET.PluginInfrastructure;
+using System.Collections.Generic;
+using System;
 
 namespace ERPHelper
 {
@@ -20,5 +23,27 @@ namespace ERPHelper
             };
             t.Start();
         }
+
+        public static List<string> GetOpenedFiles()
+        {
+            return (GetOpenedFilesIn(NppMsg.ALL_OPEN_FILES, NppMsg.NPPM_GETOPENFILENAMES));
+        }
+
+        private static List<string> GetOpenedFilesIn(NppMsg view, NppMsg mode)
+        {
+            var output = new List<string>();
+            int nbFile = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETNBOPENFILES, 0, (int)view);
+
+            using (ClikeStringArray cStrArray = new ClikeStringArray(nbFile, Win32.MAX_PATH))
+            {
+                if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)mode, cStrArray.NativePointer, nbFile) != IntPtr.Zero)
+                {
+                    output.AddRange(cStrArray.ManagedStringsUnicode);
+                }
+            }
+            return (output);
+        }
     }
+
+
 }

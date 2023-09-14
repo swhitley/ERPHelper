@@ -36,14 +36,14 @@ namespace ERPHelper
             int position = 0;
             for (int batch = 0; batch < batches; batch++) 
             {
-                this.SetTargetRange(new Position(position), new Position(position + BATCHSIZE));
+                this.SetTargetRange(position, position + BATCHSIZE);
                 position += BATCHSIZE;
                 text += this.GetTargetText();
             }
             int batchedTextLength = Encoding.UTF8.GetByteCount(text);
             if (batchedTextLength < textLength)
             {
-                this.SetTargetRange(new Position(batchedTextLength), new Position(textLength));
+                this.SetTargetRange(batchedTextLength, textLength);
                 text += this.GetTargetText();
             }
             return text;           
@@ -60,8 +60,8 @@ namespace ERPHelper
             {
                 this.GotoLine(line);
                 this.AnnotationSetText(line, lines[line]);
-                this.AnnotationSetStyle(line, 10);
-                this.AnnotationSetVisible(2);
+                this.AnnotationSetStyle(line, 10);               
+                this.AnnotationSetVisible(AnnotationVisible.BOXED);
             }
         }
     }
